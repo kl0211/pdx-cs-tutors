@@ -1,20 +1,10 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-06-30T11:57:37
-#
-#-------------------------------------------------
+HEADERS += \
+    mainwindow.hpp \
+    signinwindow.hpp
 
-QT       += core gui
+SOURCES += \
+    main.cpp \
+    mainwindow.cpp \
+    signinwindow.cpp
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-TARGET = pdx-cs-tutors
-TEMPLATE = app
-
-
-SOURCES += main.cpp\
-        mainwindow.cpp
-
-HEADERS  += mainwindow.hpp
-
-FORMS    += mainwindow.ui
+QT = core gui widgets

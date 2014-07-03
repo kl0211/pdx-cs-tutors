@@ -15,12 +15,23 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QApplication>
-#include "mainwindow.hpp"
+#ifndef SIGNINWINDOW_HPP
+#define SIGNINWINDOW_HPP
 
-int main(int argc, char ** argv) {
-  QApplication app(argc, argv);
-  MainWindow window;
-  window.show();
-  return app.exec();
-}
+#include <QWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
+
+class SignInWindow : public QWidget {
+    Q_OBJECT
+
+    QPushButton * regButton, * loginButton, * noIdButton;
+    QLineEdit * loginDialog, * nameDialog;
+    QLabel * logo;
+
+public:
+    SignInWindow(QWidget * parent = 0);
+};
+
+#endif
