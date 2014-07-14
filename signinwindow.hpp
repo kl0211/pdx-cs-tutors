@@ -26,12 +26,14 @@
 class SignInWindow : public QWidget {
     Q_OBJECT
 
+public:
     QPushButton * regButton, * loginButton, * noIdButton;
     QLineEdit * loginDialog, * nameDialog;
     QLabel * logo;
 
-public:
     SignInWindow(QWidget * parent = 0);
+    void openWindow();
+    void closeWindow();
 };
 
 #endif

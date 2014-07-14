@@ -47,13 +47,17 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		mainwindow.cpp \
-		signinwindow.cpp moc_mainwindow.cpp \
-		moc_signinwindow.cpp
+		signinwindow.cpp \
+		registerwindow.cpp moc_mainwindow.cpp \
+		moc_signinwindow.cpp \
+		moc_registerwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		signinwindow.o \
+		registerwindow.o \
 		moc_mainwindow.o \
-		moc_signinwindow.o
+		moc_signinwindow.o \
+		moc_registerwindow.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -110,7 +114,8 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		pdx-cs-tutors.pro main.cpp \
 		mainwindow.cpp \
-		signinwindow.cpp
+		signinwindow.cpp \
+		registerwindow.cpp
 QMAKE_TARGET  = pdx-cs-tutors
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = pdx-cs-tutors
@@ -267,7 +272,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d .tmp/pdx-cs-tutors1.0.0 || mkdir -p .tmp/pdx-cs-tutors1.0.0
-	$(COPY_FILE) --parents $(DIST) .tmp/pdx-cs-tutors1.0.0/ && $(COPY_FILE) --parents mainwindow.hpp signinwindow.hpp .tmp/pdx-cs-tutors1.0.0/ && $(COPY_FILE) --parents main.cpp mainwindow.cpp signinwindow.cpp .tmp/pdx-cs-tutors1.0.0/ && (cd `dirname .tmp/pdx-cs-tutors1.0.0` && $(TAR) pdx-cs-tutors1.0.0.tar pdx-cs-tutors1.0.0 && $(COMPRESS) pdx-cs-tutors1.0.0.tar) && $(MOVE) `dirname .tmp/pdx-cs-tutors1.0.0`/pdx-cs-tutors1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/pdx-cs-tutors1.0.0
+	$(COPY_FILE) --parents $(DIST) .tmp/pdx-cs-tutors1.0.0/ && $(COPY_FILE) --parents mainwindow.hpp signinwindow.hpp registerwindow.hpp .tmp/pdx-cs-tutors1.0.0/ && $(COPY_FILE) --parents main.cpp mainwindow.cpp signinwindow.cpp registerwindow.cpp .tmp/pdx-cs-tutors1.0.0/ && (cd `dirname .tmp/pdx-cs-tutors1.0.0` && $(TAR) pdx-cs-tutors1.0.0.tar pdx-cs-tutors1.0.0 && $(COMPRESS) pdx-cs-tutors1.0.0.tar) && $(MOVE) `dirname .tmp/pdx-cs-tutors1.0.0`/pdx-cs-tutors1.0.0.tar.gz . && $(DEL_FILE) -r .tmp/pdx-cs-tutors1.0.0
 
 
 clean:compiler_clean 
@@ -290,14 +295,17 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_signinwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_signinwindow.cpp moc_registerwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_signinwindow.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_signinwindow.cpp moc_registerwindow.cpp
 moc_mainwindow.cpp: mainwindow.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/karl/Projects/pdx-cs-tutors -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mainwindow.hpp -o moc_mainwindow.cpp
 
 moc_signinwindow.cpp: signinwindow.hpp
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/karl/Projects/pdx-cs-tutors -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include signinwindow.hpp -o moc_signinwindow.cpp
+
+moc_registerwindow.cpp: registerwindow.hpp
+	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/karl/Projects/pdx-cs-tutors -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/4.9 -I/usr/include/x86_64-linux-gnu/c++/4.9 -I/usr/include/c++/4.9/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include registerwindow.hpp -o moc_registerwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -317,17 +325,24 @@ main.o: main.cpp mainwindow.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.hpp \
-		signinwindow.hpp
+		signinwindow.hpp \
+		registerwindow.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 signinwindow.o: signinwindow.cpp signinwindow.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o signinwindow.o signinwindow.cpp
+
+registerwindow.o: registerwindow.cpp registerwindow.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o registerwindow.o registerwindow.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
 moc_signinwindow.o: moc_signinwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_signinwindow.o moc_signinwindow.cpp
+
+moc_registerwindow.o: moc_registerwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_registerwindow.o moc_registerwindow.cpp
 
 ####### Install
 

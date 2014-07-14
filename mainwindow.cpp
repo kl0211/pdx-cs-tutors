@@ -17,11 +17,30 @@
 
 #include "mainwindow.hpp"
 #include "signinwindow.hpp"
+#include "registerwindow.hpp"
 
 MainWindow::MainWindow() {
     signInWindow = new SignInWindow(this);
-    setCentralWidget(signInWindow);
+    registerWindow = new RegisterWindow(this);
+
+    //pages->addWidget(signInWindow);
+    //setCentralWidget(pages);
+    signInWindow->openWindow();
+
+    connect(signInWindow->regButton, SIGNAL(clicked()), this, SLOT(signInToRegister()));
+    connect(registerWindow->cancelButton, SIGNAL(clicked()), this, SLOT(registerToSignIn()));
 
     setWindowTitle("PDX CS Tutors Sign in");
-    showFullScreen();
+    resize(1280, 1024);
+    //showFullScreen();
+}
+
+void MainWindow::signInToRegister() {
+    signInWindow->closeWindow();
+    registerWindow->openWindow();
+}
+
+void MainWindow::registerToSignIn() {
+    registerWindow->closeWindow();
+    signInWindow->openWindow();
 }

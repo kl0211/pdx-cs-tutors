@@ -15,26 +15,26 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef REGISTERWINDOW_HPP
+#define REGISTERWINDOW_HPP
 
-#include <QMainWindow>
+#include <QWidget>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
 
-class SignInWindow;
-class RegisterWindow;
-
-class MainWindow : public QMainWindow {
+class RegisterWindow : public QWidget {
     Q_OBJECT
 
-    SignInWindow * signInWindow;
-    RegisterWindow * registerWindow;
-
-private slots:
-    void signInToRegister();
-    void registerToSignIn();
-
 public:
-    MainWindow();
+
+    QPushButton * regButton, * cancelButton;
+    QLineEdit * IDDialog, * nameDialog;
+    QLabel * IDLabel, * nameLabel;
+
+    RegisterWindow(QWidget * parent = 0);
+    void openWindow();
+    void closeWindow();
 };
 
 #endif
