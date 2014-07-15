@@ -15,23 +15,20 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef REGISTERWINDOW_HPP
-#define REGISTERWINDOW_HPP
+#ifndef LOCATIONWINDOW_HPP
+#define LOCATIONWINDOW_HPP
 
 #include <QWidget>
 #include <QPushButton>
-#include <QLineEdit>
-#include <QLabel>
 
-class RegisterWindow : public QWidget {
+class LocationWindow : public QWidget {
     Q_OBJECT
 
 public:
-    QPushButton * regButton, * cancelButton;
-    QLineEdit * IDDialog, * nameDialog;
-    QLabel * IDLabel, * nameLabel;
+    QPushButton * frontArea, * printer, * lockerRoom, * penguinLab,
+                * particleLab, * acm, * cancelButton;
 
-    RegisterWindow(QWidget * parent = 0);
+    LocationWindow(QWidget * parent = 0);
     void openWindow();
     void closeWindow();
 };

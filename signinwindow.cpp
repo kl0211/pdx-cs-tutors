@@ -17,31 +17,30 @@
 
 #include "signinwindow.hpp"
 
-SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent)
-{
+SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
     regButton = new QPushButton("Register", parent);
-    regButton->move(550, 950);
+    regButton->move(250, 450);
     regButton->resize(200, 50);
     regButton->hide();
 
     loginButton = new QPushButton("Sign-in", parent);
-    loginButton->move(650, 850);
+    loginButton->move(350, 350);
     loginButton->resize(200, 30);
     loginButton->hide();
 
     noIdButton = new QPushButton("Sign-in without registering", parent);
-    noIdButton->move(650, 890);
+    noIdButton->move(350, 390);
     noIdButton->resize(200, 30);
     noIdButton->hide();
 
     loginDialog = new QLineEdit(parent);
-    loginDialog->move(450, 850);
+    loginDialog->move(150, 350);
     loginDialog->resize(200, 30);
     loginDialog->setPlaceholderText("ODIN ID");
     loginDialog->hide();
 
     nameDialog = new QLineEdit(parent);
-    nameDialog->move(450, 890);
+    nameDialog->move(150, 390);
     nameDialog->resize(200, 30);
     nameDialog->setPlaceholderText("Name");
     nameDialog->hide();

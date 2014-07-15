@@ -22,16 +22,35 @@
 
 class SignInWindow;
 class RegisterWindow;
+class ClassWindow;
+class LocationWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
     SignInWindow * signInWindow;
     RegisterWindow * registerWindow;
+    ClassWindow * classWindow;
+    LocationWindow * locationWindow;
 
 private slots:
-    void signInToRegister();
-    void registerToSignIn();
+    void signInRegisterButtonPressed();
+    void signInLogInButtonPressed();
+    void signInNoRegLogInButtonPressed();
+
+    void registerCancelButtonPressed();
+    void registerRegisterButtonPressed();
+
+    void classCS161ButtonPressed();
+    void classCancelButtonPressed();
+
+    void locationFrontButtonPressed();
+    void locationPrinterButtonPressed();
+    void locationLockerButtonPressed();
+    void locationPenguinButtonPressed();
+    void locationParticleButtonPressed();
+    void locationACMButtonPressed();
+    void locationCancelButtonPressed();
 
 public:
     MainWindow();

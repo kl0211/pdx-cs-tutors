@@ -15,25 +15,19 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef REGISTERWINDOW_HPP
-#define REGISTERWINDOW_HPP
+#include "tutorwindow.hpp"
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QLabel>
+TutorWindow::TutorWindow(QWidget * parent) : QWidget(parent) {
+    cancelButton = new QPushButton("Start Over", parent);
+    cancelButton->move(500, 500);
+    cancelButton->resize(200, 75);
+    cancelButton->hide();
+}
 
-class RegisterWindow : public QWidget {
-    Q_OBJECT
+void TutorWindow::openWindow() {
 
-public:
-    QPushButton * regButton, * cancelButton;
-    QLineEdit * IDDialog, * nameDialog;
-    QLabel * IDLabel, * nameLabel;
+}
 
-    RegisterWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
-};
+void TutorWindow::closeWindow() {
 
-#endif
+}

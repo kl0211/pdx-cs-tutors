@@ -15,23 +15,21 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef REGISTERWINDOW_HPP
-#define REGISTERWINDOW_HPP
+#ifndef CLASSWINDOW_HPP
+#define CLASSWINDOW_HPP
 
 #include <QWidget>
 #include <QPushButton>
-#include <QLineEdit>
-#include <QLabel>
 
-class RegisterWindow : public QWidget {
+class ClassWindow : public QWidget {
     Q_OBJECT
 
 public:
-    QPushButton * regButton, * cancelButton;
-    QLineEdit * IDDialog, * nameDialog;
-    QLabel * IDLabel, * nameLabel;
+    QPushButton * cancelButton, * cs161, * cs162, * cs163,
+                * cs201, * cs202, * cs250, * cs251, * cs300,
+                * cs311, * other;
 
-    RegisterWindow(QWidget * parent = 0);
+    ClassWindow(QWidget * parent = 0);
     void openWindow();
     void closeWindow();
 };
