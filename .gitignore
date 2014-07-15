@@ -24,6 +24,11 @@
 *.user*
 *.files
 *.includes
+*.creator
+*.config
 
 # MakeFile
 Makefile
+
+# Binary File
+pdx-cs-tutors
