@@ -21,12 +21,14 @@
 #include "classwindow.hpp"
 #include "locationwindow.hpp"
 #include "tutorwindow.hpp"
+#include "confirmwindow.hpp"
 
 MainWindow::MainWindow() {
     signInWindow = new SignInWindow(this);
     registerWindow = new RegisterWindow(this);
     classWindow = new ClassWindow(this);
     locationWindow = new LocationWindow(this);
+    confirmWindow = new ConfirmWindow(this);
 
     signInWindow->openWindow();
 
@@ -38,6 +40,15 @@ MainWindow::MainWindow() {
     connect(registerWindow->regButton, SIGNAL(clicked()), this, SLOT(registerRegisterButtonPressed()));
 
     connect(classWindow->cs161, SIGNAL(clicked()), this, SLOT(classCS161ButtonPressed()));
+    connect(classWindow->cs162, SIGNAL(clicked()), this, SLOT(classCS162ButtonPressed()));
+    connect(classWindow->cs163, SIGNAL(clicked()), this, SLOT(classCS163ButtonPressed()));
+    connect(classWindow->cs201, SIGNAL(clicked()), this, SLOT(classCS201ButtonPressed()));
+    connect(classWindow->cs202, SIGNAL(clicked()), this, SLOT(classCS202ButtonPressed()));
+    connect(classWindow->cs250, SIGNAL(clicked()), this, SLOT(classCS250ButtonPressed()));
+    connect(classWindow->cs251, SIGNAL(clicked()), this, SLOT(classCS251ButtonPressed()));
+    connect(classWindow->cs300, SIGNAL(clicked()), this, SLOT(classCS300ButtonPressed()));
+    connect(classWindow->cs311, SIGNAL(clicked()), this, SLOT(classCS311ButtonPressed()));
+    connect(classWindow->other, SIGNAL(clicked()), this, SLOT(classOtherButtonPressed()));
     connect(classWindow->cancelButton, SIGNAL(clicked()), this, SLOT(classCancelButtonPressed()));
 
     connect(locationWindow->frontArea, SIGNAL(clicked()), this, SLOT(locationFrontButtonPressed()));
@@ -48,6 +59,9 @@ MainWindow::MainWindow() {
     connect(locationWindow->acm, SIGNAL(clicked()), this, SLOT(locationACMButtonPressed()));
     connect(locationWindow->cancelButton, SIGNAL(clicked()), this, SLOT(locationCancelButtonPressed()));
 
+    connect(confirmWindow->confirmButton, SIGNAL(clicked()), this, SLOT(confirmConfirmButtonPressed()));
+    connect(confirmWindow->cancelButton, SIGNAL(clicked()), this, SLOT(confirmCancelButtonPressed()));
+
     setWindowTitle("PDX CS Tutors Sign in");
     resize(800, 600);
     //showFullScreen();
@@ -57,8 +71,8 @@ MainWindow::MainWindow() {
  * Sign-in Window SLOTS
  */
 void MainWindow::signInRegisterButtonPressed() {
-    signInWindow->closeWindow();
     //do stuff
+    signInWindow->closeWindow();
     registerWindow->openWindow();
 }
 
@@ -71,8 +85,8 @@ void MainWindow::signInLogInButtonPressed() {
 }
 
 void MainWindow::signInNoRegLogInButtonPressed() {
-    signInWindow->closeWindow();
     //do stuff
+    signInWindow->closeWindow();
     classWindow->openWindow();
 }
 
@@ -80,14 +94,14 @@ void MainWindow::signInNoRegLogInButtonPressed() {
  * Register Window SLOTS
  */
 void MainWindow::registerCancelButtonPressed() {
-    registerWindow->closeWindow();
     //do stuff
+    registerWindow->closeWindow();
     signInWindow->openWindow();
 }
 
 void MainWindow::registerRegisterButtonPressed() {
-    registerWindow->closeWindow();
     //do stuff
+    registerWindow->closeWindow();
     signInWindow->openWindow();
 }
 
@@ -95,14 +109,68 @@ void MainWindow::registerRegisterButtonPressed() {
  * Class Selection Window SLOTS
  */
 void MainWindow::classCS161ButtonPressed() {
-    classWindow->closeWindow();
     //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS162ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS163ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS201ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS202ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS250ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS251ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS300ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classCS311ButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
+    locationWindow->openWindow();
+}
+
+void MainWindow::classOtherButtonPressed() {
+    //do stuff
+    classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCancelButtonPressed() {
-    classWindow->closeWindow();
     //do stuff
+    classWindow->closeWindow();
     signInWindow->openWindow();
 }
 
@@ -110,43 +178,58 @@ void MainWindow::classCancelButtonPressed() {
  * Location Window Button SLOTS
  */
 void MainWindow::locationFrontButtonPressed() {
-    locationWindow->closeWindow();
     //do stuff
-    signInWindow->openWindow();
+    locationWindow->closeWindow();
+    confirmWindow->openWindow();
 }
 
 void MainWindow::locationPrinterButtonPressed() {
-    locationWindow->closeWindow();
     //do stuff
-    signInWindow->openWindow();
+    locationWindow->closeWindow();
+    confirmWindow->openWindow();
 }
 
 void MainWindow::locationLockerButtonPressed() {
-    locationWindow->closeWindow();
     //do stuff
-    signInWindow->openWindow();
+    locationWindow->closeWindow();
+    confirmWindow->openWindow();
 }
 
 void MainWindow::locationPenguinButtonPressed() {
-    locationWindow->closeWindow();
     //do stuff
-    signInWindow->openWindow();
+    locationWindow->closeWindow();
+    confirmWindow->openWindow();
 }
 
 void MainWindow::locationParticleButtonPressed() {
-    locationWindow->closeWindow();
     //do stuff
-    signInWindow->openWindow();
+    locationWindow->closeWindow();
+    confirmWindow->openWindow();
 }
 
 void MainWindow::locationACMButtonPressed() {
-    locationWindow->closeWindow();
     //do stuff
-    signInWindow->openWindow();
+    locationWindow->closeWindow();
+    confirmWindow->openWindow();
 }
 
 void MainWindow::locationCancelButtonPressed() {
-    locationWindow->closeWindow();
     //do stuff
+    locationWindow->closeWindow();
+    signInWindow->openWindow();
+}
+
+/*
+ * Confirm Window Button SLOTS
+ */
+void MainWindow::confirmConfirmButtonPressed() {
+    //do stuff
+    confirmWindow->closeWindow();
+    signInWindow->openWindow();
+}
+
+void MainWindow::confirmCancelButtonPressed() {
+    //do stuff
+    confirmWindow->closeWindow();
     signInWindow->openWindow();
 }

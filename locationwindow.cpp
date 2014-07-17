@@ -34,17 +34,17 @@ LocationWindow::LocationWindow(QWidget * parent) : QWidget (parent) {
     lockerRoom->hide();
 
     penguinLab = new QPushButton("FAB 88-10\n(GNU/Linux Lab A)", parent);
-    penguinLab->move(150, 300);
+    penguinLab->move(450, 0);
     penguinLab->resize(200, 75);
     penguinLab->hide();
 
     particleLab = new QPushButton("FAB 88-09\n(GNU/Linux Lab B)", parent);
-    particleLab->move(150, 400);
+    particleLab->move(450, 100);
     particleLab->resize(200, 75);
     particleLab->hide();
 
     acm = new QPushButton("ACM room", parent);
-    acm->move(450, 0);
+    acm->move(450, 200);
     acm->resize(200, 75);
     acm->hide();
 

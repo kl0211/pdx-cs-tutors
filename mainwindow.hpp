@@ -24,6 +24,7 @@ class SignInWindow;
 class RegisterWindow;
 class ClassWindow;
 class LocationWindow;
+class ConfirmWindow;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -32,6 +33,7 @@ class MainWindow : public QMainWindow {
     RegisterWindow * registerWindow;
     ClassWindow * classWindow;
     LocationWindow * locationWindow;
+    ConfirmWindow * confirmWindow;
 
 private slots:
     void signInRegisterButtonPressed();
@@ -42,6 +44,15 @@ private slots:
     void registerRegisterButtonPressed();
 
     void classCS161ButtonPressed();
+    void classCS162ButtonPressed();
+    void classCS163ButtonPressed();
+    void classCS201ButtonPressed();
+    void classCS202ButtonPressed();
+    void classCS250ButtonPressed();
+    void classCS251ButtonPressed();
+    void classCS300ButtonPressed();
+    void classCS311ButtonPressed();
+    void classOtherButtonPressed();
     void classCancelButtonPressed();
 
     void locationFrontButtonPressed();
@@ -51,6 +62,9 @@ private slots:
     void locationParticleButtonPressed();
     void locationACMButtonPressed();
     void locationCancelButtonPressed();
+
+    void confirmConfirmButtonPressed();
+    void confirmCancelButtonPressed();
 
 public:
     MainWindow();
