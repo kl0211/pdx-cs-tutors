@@ -24,6 +24,9 @@
 class ClassWindow : public QWidget {
     Q_OBJECT
 
+    static const int startXPos = 300;
+    static const int startYPos = 100;
+
 public:
     QPushButton * cancelButton, * cs161, * cs162, * cs163,
                 * cs201, * cs202, * cs250, * cs251, * cs300,

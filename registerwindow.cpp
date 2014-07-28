@@ -19,36 +19,36 @@
 
 RegisterWindow::RegisterWindow(QWidget * parent) : QWidget(parent) {
     IDLabel = new QLabel(parent);
-    IDLabel->move(100, 200);
+    IDLabel->move(startXPos + 100, startYPos + 200);
     IDLabel->resize(400, 30);
     IDLabel->setText("Scan your PSU ID barcode or enter ODIN ID #");
     IDLabel->hide();
 
     nameLabel = new QLabel(parent);
-    nameLabel->move(100, 300);
+    nameLabel->move(startXPos + 100, startYPos + 300);
     nameLabel->resize(400, 30);
     nameLabel->setText("Enter your name");
     nameLabel->hide();
 
     IDDialog = new QLineEdit(parent);
-    IDDialog->move(100, 240);
+    IDDialog->move(startXPos + 100, startYPos + 240);
     IDDialog->resize(200, 30);
     IDDialog->setPlaceholderText("ODIN ID");
     IDDialog->hide();
 
     nameDialog = new QLineEdit(parent);
-    nameDialog->move(100, 340);
+    nameDialog->move(startXPos + 100, startYPos + 340);
     nameDialog->resize(200, 30);
     nameDialog->setPlaceholderText("Name");
     nameDialog->hide();
 
     regButton = new QPushButton("Register", parent);
-    regButton->move(0, 500);
+    regButton->move(startXPos + 0, startYPos + 500);
     regButton->resize(300, 75);
     regButton->hide();
 
     cancelButton = new QPushButton("Cancel", parent);
-    cancelButton->move(500, 500);
+    cancelButton->move(startXPos + 500, startYPos + 500);
     cancelButton->resize(300, 75);
     cancelButton->hide();
 

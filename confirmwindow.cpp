@@ -19,12 +19,12 @@
 
 ConfirmWindow::ConfirmWindow(QWidget * parent) : QWidget (parent) {
     confirmButton = new QPushButton("Confirm", parent);
-    confirmButton->move(0, 500);
+    confirmButton->move(startXPos + 0, startYPos + 500);
     confirmButton->resize(300, 75);
     confirmButton->hide();
 
     cancelButton = new QPushButton("Start Over", parent);
-    cancelButton->move(500, 500);
+    cancelButton->move(startXPos + 500, startYPos + 500);
     cancelButton->resize(300, 75);
     cancelButton->hide();
 }

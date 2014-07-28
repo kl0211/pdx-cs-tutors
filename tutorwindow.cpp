@@ -19,7 +19,7 @@
 
 TutorWindow::TutorWindow(QWidget * parent) : QWidget(parent) {
     cancelButton = new QPushButton("Start Over", parent);
-    cancelButton->move(500, 500);
+    cancelButton->move(startXPos + 500, startYPos + 500);
     cancelButton->resize(200, 75);
     cancelButton->hide();
 }

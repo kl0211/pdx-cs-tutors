@@ -63,7 +63,7 @@ MainWindow::MainWindow() {
     connect(confirmWindow->cancelButton, SIGNAL(clicked()), this, SLOT(confirmCancelButtonPressed()));
 
     setWindowTitle("PDX CS Tutors Sign in");
-    resize(800, 600);
+    resize(1366, 768);
     //showFullScreen();
 }
 

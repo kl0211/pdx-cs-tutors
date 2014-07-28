@@ -19,57 +19,57 @@
 
 ClassWindow::ClassWindow(QWidget * parent) : QWidget (parent) {
     cs161 = new QPushButton("CS161", parent);
-    cs161->move(150, 0);
+    cs161->move(startXPos + 150, startYPos + 0);
     cs161->resize(200, 75);
     cs161->hide();
 
     cs162 = new QPushButton("CS162", parent);
-    cs162->move(150, 100);
+    cs162->move(startXPos + 150, startYPos + 100);
     cs162->resize(200, 75);
     cs162->hide();
 
     cs163 = new QPushButton("CS163", parent);
-    cs163->move(150, 200);
+    cs163->move(startXPos + 150, startYPos + 200);
     cs163->resize(200, 75);
     cs163->hide();
 
     cs201 = new QPushButton("CS201", parent);
-    cs201->move(150, 300);
+    cs201->move(startXPos + 150, startYPos + 300);
     cs201->resize(200, 75);
     cs201->hide();
 
     cs202 = new QPushButton("CS202", parent);
-    cs202->move(150, 400);
+    cs202->move(startXPos + 150, startYPos + 400);
     cs202->resize(200, 75);
     cs202->hide();
 
     cs250 = new QPushButton("CS250", parent);
-    cs250->move(450, 0);
+    cs250->move(startXPos + 450, startYPos + 0);
     cs250->resize(200, 75);
     cs250->hide();
 
     cs251 = new QPushButton("CS251", parent);
-    cs251->move(450, 100);
+    cs251->move(startXPos + 450, startYPos + 100);
     cs251->resize(200, 75);
     cs251->hide();
 
     cs300 = new QPushButton("CS300", parent);
-    cs300->move(450, 200);
+    cs300->move(startXPos + 450, startYPos + 200);
     cs300->resize(200, 75);
     cs300->hide();
 
     cs311 = new QPushButton("CS311", parent);
-    cs311->move(450, 300);
+    cs311->move(startXPos + 450, startYPos + 300);
     cs311->resize(200, 75);
     cs311->hide();
 
     other = new QPushButton("Other", parent);
-    other->move(450, 400);
+    other->move(startXPos + 450, startYPos + 400);
     other->resize(200, 75);
     other->hide();
 
     cancelButton = new QPushButton("Start Over", parent);
-    cancelButton->move(500, 500);
+    cancelButton->move(startXPos + 500, startYPos + 500);
     cancelButton->resize(200, 75);
     cancelButton->hide();
 }

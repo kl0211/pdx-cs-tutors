@@ -19,28 +19,28 @@
 
 SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
     regButton = new QPushButton("Register", parent);
-    regButton->move(250, 450);
+    regButton->move(startXPos + 250, startYPos + 450);
     regButton->resize(200, 50);
     regButton->hide();
 
     loginButton = new QPushButton("Sign-in", parent);
-    loginButton->move(350, 350);
+    loginButton->move(startXPos + 350, startYPos + 350);
     loginButton->resize(200, 30);
     loginButton->hide();
 
     noIdButton = new QPushButton("Sign-in without registering", parent);
-    noIdButton->move(350, 390);
+    noIdButton->move(startXPos + 350, startYPos + 390);
     noIdButton->resize(200, 30);
     noIdButton->hide();
 
     loginDialog = new QLineEdit(parent);
-    loginDialog->move(150, 350);
+    loginDialog->move(startXPos + 150, startYPos + 350);
     loginDialog->resize(200, 30);
     loginDialog->setPlaceholderText("ODIN ID");
     loginDialog->hide();
 
     nameDialog = new QLineEdit(parent);
-    nameDialog->move(150, 390);
+    nameDialog->move(startXPos + 150, startYPos + 390);
     nameDialog->resize(200, 30);
     nameDialog->setPlaceholderText("Name");
     nameDialog->hide();

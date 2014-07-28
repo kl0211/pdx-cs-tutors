@@ -24,6 +24,9 @@
 class LocationWindow : public QWidget {
     Q_OBJECT
 
+    static const int startXPos = 300;
+    static const int startYPos = 100;
+
 public:
     QPushButton * frontArea, * printer, * lockerRoom, * penguinLab,
                 * particleLab, * acm, * cancelButton;

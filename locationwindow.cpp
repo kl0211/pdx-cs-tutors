@@ -19,37 +19,37 @@
 
 LocationWindow::LocationWindow(QWidget * parent) : QWidget (parent) {
     frontArea = new QPushButton("Front entrance area", parent);
-    frontArea->move(150, 0);
+    frontArea->move(startXPos + 150, startYPos + 0);
     frontArea->resize(200, 75);
     frontArea->hide();
 
     printer = new QPushButton("Back area near printer", parent);
-    printer->move(150, 100);
+    printer->move(startXPos + 150, startYPos + 100);
     printer->resize(200, 75);
     printer->hide();
 
     lockerRoom = new QPushButton("Locker room", parent);
-    lockerRoom->move(150, 200);
+    lockerRoom->move(startXPos + 150, startYPos + 200);
     lockerRoom->resize(200, 75);
     lockerRoom->hide();
 
     penguinLab = new QPushButton("FAB 88-10\n(GNU/Linux Lab A)", parent);
-    penguinLab->move(450, 0);
+    penguinLab->move(startXPos + 450, startYPos + 0);
     penguinLab->resize(200, 75);
     penguinLab->hide();
 
     particleLab = new QPushButton("FAB 88-09\n(GNU/Linux Lab B)", parent);
-    particleLab->move(450, 100);
+    particleLab->move(startXPos + 450, startYPos + 100);
     particleLab->resize(200, 75);
     particleLab->hide();
 
     acm = new QPushButton("ACM room", parent);
-    acm->move(450, 200);
+    acm->move(startXPos + 450, startYPos + 200);
     acm->resize(200, 75);
     acm->hide();
 
     cancelButton = new QPushButton("Start Over", parent);
-    cancelButton->move(500, 500);
+    cancelButton->move(startXPos + 500, startYPos + 500);
     cancelButton->resize(200, 75);
     cancelButton->hide();
 }
