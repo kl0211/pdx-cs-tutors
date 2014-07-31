@@ -19,6 +19,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <string>
+#include <curlpp/cURLpp.hpp>
+#include <curlpp/Easy.hpp>
+using namespace std;
+using namespace cURLpp;
 
 class SignInWindow;
 class RegisterWindow;
@@ -29,6 +34,8 @@ class ConfirmWindow;
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
+    Easy * handle;
+    string * url;
     SignInWindow * signInWindow;
     RegisterWindow * registerWindow;
     ClassWindow * classWindow;
