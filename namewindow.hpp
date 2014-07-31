@@ -15,26 +15,28 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef SIGNINWINDOW_HPP
-#define SIGNINWINDOW_HPP
+#ifndef NAMEWINDOW_HPP
+#define NAMEWINDOW_HPP
+#define HOST "localhost"
+#define PORT "8080"
 
 #include <QWidget>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
 
-class SignInWindow : public QWidget {
+class NameWindow : public QWidget {
     Q_OBJECT
 
     static const int startXPos = 300;
     static const int startYPos = 100;
 
 public:
-    QPushButton * loginButton, * noIdButton;
-    QLineEdit * loginDialog;
-    QLabel * logo, * loginText;
+    QPushButton * loginButton, * cancelButton;
+    QLineEdit * nameDialog;
+    QLabel * loginText;
 
-    SignInWindow(QWidget * parent = 0);
+    NameWindow(QWidget * parent = 0);
     void openWindow();
     void closeWindow();
 };

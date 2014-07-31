@@ -22,10 +22,13 @@
 #include <string>
 #include <curlpp/cURLpp.hpp>
 #include <curlpp/Easy.hpp>
+#include <QTextStream>
+#include <QLabel>
 using namespace std;
 using namespace cURLpp;
 
 class SignInWindow;
+class NameWindow;
 class RegisterWindow;
 class ClassWindow;
 class LocationWindow;
@@ -35,17 +38,21 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 
     Easy * handle;
-    string * url;
+    QString url;
+    QLabel * errorText;
     SignInWindow * signInWindow;
+    NameWindow * nameWindow;
     RegisterWindow * registerWindow;
     ClassWindow * classWindow;
     LocationWindow * locationWindow;
     ConfirmWindow * confirmWindow;
 
 private slots:
-    void signInRegisterButtonPressed();
     void signInLogInButtonPressed();
     void signInNoRegLogInButtonPressed();
+
+    void nameLogInButtonPressed();
+    void nameCancelButtonPressed();
 
     void registerCancelButtonPressed();
     void registerRegisterButtonPressed();

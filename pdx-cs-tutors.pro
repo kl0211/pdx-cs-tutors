@@ -5,7 +5,8 @@ HEADERS += \
     classwindow.hpp \
     locationwindow.hpp \
     tutorwindow.hpp \
-    confirmwindow.hpp
+    confirmwindow.hpp \
+    namewindow.hpp
 
 SOURCES += \
     main.cpp \
@@ -15,6 +16,7 @@ SOURCES += \
     classwindow.cpp \
     locationwindow.cpp \
     tutorwindow.cpp \
-    confirmwindow.cpp
+    confirmwindow.cpp \
+    namewindow.cpp
 
 QT = core gui widgets

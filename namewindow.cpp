@@ -15,10 +15,10 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "signinwindow.hpp"
+#include "namewindow.hpp"
 
-SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
-    loginText = new QLabel("Welcome! Please scan your barcode or type in your ODIN ID below", parent);
+NameWindow::NameWindow(QWidget * parent) : QWidget(parent) {
+    loginText = new QLabel("Enter your name below", parent);
     loginText->move(startXPos + 200, startYPos + 350);
     loginText->resize(400, 30);
     loginText->hide();
@@ -28,34 +28,30 @@ SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
     loginButton->resize(200, 80);
     loginButton->hide();
 
-    noIdButton = new QPushButton("Sign-in without registering", parent);
-    noIdButton->move(startXPos + 250, startYPos + 550);
-    noIdButton->resize(300, 80);
-    noIdButton->hide();
+    cancelButton = new QPushButton("Cancel", parent);
+    cancelButton->move(startXPos + 250, startYPos + 550);
+    cancelButton->resize(300, 80);
+    cancelButton->hide();
 
-    loginDialog = new QLineEdit(parent);
-    loginDialog->move(startXPos + 200, startYPos + 400);
-    loginDialog->resize(200, 80);
-    loginDialog->setPlaceholderText("ODIN ID");
-    loginDialog->setMaxLength(9);
-    loginDialog->hide();
-
-    logo = new QLabel("<img src='psulogo.gif' />", parent);
-    logo->resize(1000,100);
+    nameDialog = new QLineEdit(parent);
+    nameDialog->move(startXPos + 200, startYPos + 400);
+    nameDialog->resize(200, 80);
+    nameDialog->setPlaceholderText("Name");
+    nameDialog->hide();
 }
 
-void SignInWindow::openWindow() {
-    loginText->show();
+void NameWindow::openWindow() {
     loginButton->show();
-    noIdButton->show();
-    loginDialog->show();
-    loginDialog->setFocus();
+    loginText->show();
+    cancelButton->show();
+    nameDialog->show();
+    nameDialog->setFocus();
 }
 
-void SignInWindow::closeWindow() {
-    loginText->hide();
+void NameWindow::closeWindow() {
     loginButton->hide();
-    noIdButton->hide();
-    loginDialog->hide();
-    loginDialog->clear();
+    loginText->hide();
+    cancelButton->hide();
+    nameDialog->hide();
+    nameDialog->clear();
 }

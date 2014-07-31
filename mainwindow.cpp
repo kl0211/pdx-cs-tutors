@@ -17,6 +17,7 @@
 
 #include "mainwindow.hpp"
 #include "signinwindow.hpp"
+#include "namewindow.hpp"
 #include "registerwindow.hpp"
 #include "classwindow.hpp"
 #include "locationwindow.hpp"
@@ -25,16 +26,26 @@
 
 MainWindow::MainWindow() {
     signInWindow = new SignInWindow(this);
+    nameWindow = new NameWindow(this);
     registerWindow = new RegisterWindow(this);
     classWindow = new ClassWindow(this);
     locationWindow = new LocationWindow(this);
     confirmWindow = new ConfirmWindow(this);
 
+    errorText = new QLabel(this);
+    errorText->move(910, 525);
+    errorText->resize(400, 30);
+    errorText->hide();
+
     signInWindow->openWindow();
 
-    connect(signInWindow->regButton, SIGNAL(clicked()), this, SLOT(signInRegisterButtonPressed()));
     connect(signInWindow->loginButton, SIGNAL(clicked()), this, SLOT(signInLogInButtonPressed()));
+    connect(signInWindow->loginDialog, SIGNAL(returnPressed()), this, SLOT(signInLogInButtonPressed()));
     connect(signInWindow->noIdButton, SIGNAL(clicked()), this, SLOT(signInNoRegLogInButtonPressed()));
+
+    connect(nameWindow->loginButton, SIGNAL(clicked()), this, SLOT(nameLogInButtonPressed()));
+    connect(nameWindow->nameDialog, SIGNAL(returnPressed()), this, SLOT(nameLogInButtonPressed()));
+    connect(nameWindow->cancelButton, SIGNAL(clicked()), this, SLOT(nameCancelButtonPressed()));
 
     connect(registerWindow->cancelButton, SIGNAL(clicked()), this, SLOT(registerCancelButtonPressed()));
     connect(registerWindow->regButton, SIGNAL(clicked()), this, SLOT(registerRegisterButtonPressed()));
@@ -70,24 +81,61 @@ MainWindow::MainWindow() {
 /*
  * Sign-in Window SLOTS
  */
-void MainWindow::signInRegisterButtonPressed() {
-    //do stuff
-    signInWindow->closeWindow();
-    registerWindow->openWindow();
-}
-
 void MainWindow::signInLogInButtonPressed() {
+    if (signInWindow->loginDialog->text() == NULL) {
+        signInWindow->closeWindow();
+        signInWindow->openWindow();
+        errorText->setText("Please enter a valid ODIN ID");
+        errorText->show();
+        return;
+    }
+    url = "http://";
+    url += HOST;
+    url += ":";
+    url += PORT;
+    url += "/list/by_id?id=";
+    url += signInWindow->loginDialog->text();
+    //Need to query database for json object holding login information
+    //if idNumber is a tutor's ID, go to the tutorwindow.
+    //if idNumber is a registered number, go to classWindow
+    //otherwise, idNumber is not registered, go to RegisterWindow
+    errorText->hide();
     signInWindow->closeWindow();
-    /* If a tutor is signing in, open tutorWindow.
-     * otherwise, open to classWindow
-     */
     classWindow->openWindow();
 }
 
 void MainWindow::signInNoRegLogInButtonPressed() {
-    //do stuff
+    errorText->hide();
     signInWindow->closeWindow();
+    nameWindow->openWindow();
+}
+
+/*
+ * Name Window SLOTS
+ */
+void MainWindow::nameLogInButtonPressed() {
+    if (nameWindow->nameDialog->text() == NULL) {
+        nameWindow->closeWindow();
+        nameWindow->openWindow();
+        errorText->setText("You appear to have no name! Please consult your parents.");
+        errorText->show();
+        return;
+    }
+    url = "http://";
+    url += HOST;
+    url += ":";
+    url += PORT;
+    url += "/list/by_name?name=";
+    url += nameWindow->nameDialog->text();
+    errorText->hide();
+    nameWindow->closeWindow();
     classWindow->openWindow();
+}
+
+void MainWindow::nameCancelButtonPressed() {
+    errorText->hide();
+    nameWindow->closeWindow();
+    signInWindow->openWindow();
 }
 
 /*
@@ -109,67 +157,66 @@ void MainWindow::registerRegisterButtonPressed() {
  * Class Selection Window SLOTS
  */
 void MainWindow::classCS161ButtonPressed() {
-    //do stuff
+    url += "&class=CS161";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS162ButtonPressed() {
-    //do stuff
+    url += "&class=CS162";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS163ButtonPressed() {
-    //do stuff
+    url += "&class=CS163";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS201ButtonPressed() {
-    //do stuff
+    url += "&class=CS201";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS202ButtonPressed() {
-    //do stuff
+    url += "&class=CS202";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS250ButtonPressed() {
-    //do stuff
+    url += "&class=CS250";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS251ButtonPressed() {
-    //do stuff
+    url += "&class=CS251";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS300ButtonPressed() {
-    //do stuff
+    url += "&class=CS300";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS311ButtonPressed() {
-    //do stuff
+    url += "&class=CS311";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classOtherButtonPressed() {
-    //do stuff
+    url += "&class=Other";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCancelButtonPressed() {
-    //do stuff
     classWindow->closeWindow();
     signInWindow->openWindow();
 }
@@ -178,43 +225,42 @@ void MainWindow::classCancelButtonPressed() {
  * Location Window Button SLOTS
  */
 void MainWindow::locationFrontButtonPressed() {
-    //do stuff
+    url += "&location=front";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationPrinterButtonPressed() {
-    //do stuff
+    url += "&location=printer";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationLockerButtonPressed() {
-    //do stuff
+    url += "&location=locker";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationPenguinButtonPressed() {
-    //do stuff
+    url += "&location=laba";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationParticleButtonPressed() {
-    //do stuff
+    url += "&location=labb";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationACMButtonPressed() {
-    //do stuff
+    url += "&location=acm";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationCancelButtonPressed() {
-    //do stuff
     locationWindow->closeWindow();
     signInWindow->openWindow();
 }
@@ -223,13 +269,13 @@ void MainWindow::locationCancelButtonPressed() {
  * Confirm Window Button SLOTS
  */
 void MainWindow::confirmConfirmButtonPressed() {
-    //do stuff
+    QTextStream(stdout) << url << endl;
+
     confirmWindow->closeWindow();
     signInWindow->openWindow();
 }
 
 void MainWindow::confirmCancelButtonPressed() {
-    //do stuff
     confirmWindow->closeWindow();
     signInWindow->openWindow();
 }
