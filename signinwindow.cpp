@@ -38,10 +38,19 @@ SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
     loginDialog->resize(200, 80);
     loginDialog->setPlaceholderText("ODIN ID");
     loginDialog->setMaxLength(9);
+    loginDialog->setValidator(new QRegExpValidator(QRegExp("[0-9]{9}")));
     loginDialog->hide();
 
+    font.setPointSize(32);
+    font.setBold(true);
+
     logo = new QLabel("<img src='psulogo.gif' />", parent);
-    logo->resize(1000,100);
+    logo->resize(300,100);
+
+    title = new QLabel("CS Tutor Sign-In", parent);
+    title->setFont(font);
+    title->move(550, 0);
+    title->resize(800, 100);
 }
 
 void SignInWindow::openWindow() {

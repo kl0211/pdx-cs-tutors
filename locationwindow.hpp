@@ -29,7 +29,7 @@ class LocationWindow : public QWidget {
 
 public:
     QPushButton * frontArea, * printer, * lockerRoom, * penguinLab,
-                * particleLab, * acm, * cancelButton;
+                * particleLab, * acm, * conference, * cancelButton;
 
     LocationWindow(QWidget * parent = 0);
     void openWindow();

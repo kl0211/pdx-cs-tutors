@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
+#include <QRegExpValidator>
 
 class SignInWindow : public QWidget {
     Q_OBJECT
@@ -32,7 +33,8 @@ class SignInWindow : public QWidget {
 public:
     QPushButton * loginButton, * noIdButton;
     QLineEdit * loginDialog;
-    QLabel * logo, * loginText;
+    QLabel * logo, * title, * loginText;
+    QFont font;
 
     SignInWindow(QWidget * parent = 0);
     void openWindow();

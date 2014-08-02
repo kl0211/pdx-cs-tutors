@@ -37,6 +37,8 @@ NameWindow::NameWindow(QWidget * parent) : QWidget(parent) {
     nameDialog->move(startXPos + 200, startYPos + 400);
     nameDialog->resize(200, 80);
     nameDialog->setPlaceholderText("Name");
+    nameDialog->setMaxLength(20);
+    nameDialog->setValidator(new QRegExpValidator(QRegExp("(([a-z]|[A-Z])+\\s?([a-z]|[A-Z])+){3,20}")));
     nameDialog->hide();
 }
 

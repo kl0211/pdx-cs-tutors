@@ -34,11 +34,13 @@ class ClassWindow;
 class LocationWindow;
 class ConfirmWindow;
 
+const int XRES = 1366, YRES = 768;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
     Easy * handle;
-    QString url;
+    QString url, id, name, klass, location;
     QLabel * errorText;
     SignInWindow * signInWindow;
     NameWindow * nameWindow;
@@ -75,6 +77,7 @@ private slots:
     void locationPenguinButtonPressed();
     void locationParticleButtonPressed();
     void locationACMButtonPressed();
+    void locationConferenceButtonPressed();
     void locationCancelButtonPressed();
 
     void confirmConfirmButtonPressed();

@@ -40,6 +40,8 @@ RegisterWindow::RegisterWindow(QWidget * parent) : QWidget(parent) {
     nameDialog->move(startXPos + 100, startYPos + 340);
     nameDialog->resize(200, 30);
     nameDialog->setPlaceholderText("Name");
+    nameDialog->setMaxLength(20);
+    nameDialog->setValidator(new QRegExpValidator(QRegExp("([a-z]|[A-Z]){3,20}")));
     nameDialog->hide();
 
     regButton = new QPushButton("Register", parent);

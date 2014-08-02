@@ -34,7 +34,7 @@ MainWindow::MainWindow() {
 
     errorText = new QLabel(this);
     errorText->move(910, 525);
-    errorText->resize(400, 30);
+    errorText->resize(400, 40);
     errorText->hide();
 
     signInWindow->openWindow();
@@ -68,13 +68,14 @@ MainWindow::MainWindow() {
     connect(locationWindow->penguinLab, SIGNAL(clicked()), this, SLOT(locationPenguinButtonPressed()));
     connect(locationWindow->particleLab, SIGNAL(clicked()), this, SLOT(locationParticleButtonPressed()));
     connect(locationWindow->acm, SIGNAL(clicked()), this, SLOT(locationACMButtonPressed()));
+    connect(locationWindow->conference, SIGNAL(clicked()), this, SLOT(locationConferenceButtonPressed()));
     connect(locationWindow->cancelButton, SIGNAL(clicked()), this, SLOT(locationCancelButtonPressed()));
 
     connect(confirmWindow->confirmButton, SIGNAL(clicked()), this, SLOT(confirmConfirmButtonPressed()));
     connect(confirmWindow->cancelButton, SIGNAL(clicked()), this, SLOT(confirmCancelButtonPressed()));
 
     setWindowTitle("PDX CS Tutors Sign in");
-    resize(1366, 768);
+    resize(XRES, YRES);
     //showFullScreen();
 }
 
@@ -82,26 +83,21 @@ MainWindow::MainWindow() {
  * Sign-in Window SLOTS
  */
 void MainWindow::signInLogInButtonPressed() {
-    if (signInWindow->loginDialog->text() == NULL) {
+    if (signInWindow->loginDialog->cursorPosition() < 9) {
         signInWindow->closeWindow();
         signInWindow->openWindow();
-        errorText->setText("Please enter a valid ODIN ID");
+        errorText->setText("Please enter a valid\n9-digit ODIN ID");
         errorText->show();
         return;
     }
-    url = "http://";
-    url += HOST;
-    url += ":";
-    url += PORT;
-    url += "/list/by_id?id=";
-    url += signInWindow->loginDialog->text();
+    id = signInWindow->loginDialog->text();
     //Need to query database for json object holding login information
     //if idNumber is a tutor's ID, go to the tutorwindow.
     //if idNumber is a registered number, go to classWindow
     //otherwise, idNumber is not registered, go to RegisterWindow
     errorText->hide();
     signInWindow->closeWindow();
-    classWindow->openWindow();
+    registerWindow->openWindow();
 }
 
 void MainWindow::signInNoRegLogInButtonPressed() {
@@ -114,19 +110,14 @@ void MainWindow::signInNoRegLogInButtonPressed() {
  * Name Window SLOTS
  */
 void MainWindow::nameLogInButtonPressed() {
-    if (nameWindow->nameDialog->text() == NULL) {
+    if (nameWindow->nameDialog->cursorPosition() < 3) {
         nameWindow->closeWindow();
         nameWindow->openWindow();
-        errorText->setText("You appear to have no name! Please consult your parents.");
+        errorText->setText("Please enter a name with at least 3 characters");
         errorText->show();
         return;
     }
-    url = "http://";
-    url += HOST;
-    url += ":";
-    url += PORT;
-    url += "/list/by_name?name=";
-    url += nameWindow->nameDialog->text();
+    name = nameWindow->nameDialog->text();
     errorText->hide();
     nameWindow->closeWindow();
     classWindow->openWindow();
@@ -150,68 +141,68 @@ void MainWindow::registerCancelButtonPressed() {
 void MainWindow::registerRegisterButtonPressed() {
     //do stuff
     registerWindow->closeWindow();
-    signInWindow->openWindow();
+    classWindow->openWindow();
 }
 
 /*
  * Class Selection Window SLOTS
  */
 void MainWindow::classCS161ButtonPressed() {
-    url += "&class=CS161";
+    klass = "CS161";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS162ButtonPressed() {
-    url += "&class=CS162";
+    klass = "CS162";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS163ButtonPressed() {
-    url += "&class=CS163";
+    klass = "CS163";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS201ButtonPressed() {
-    url += "&class=CS201";
+    klass = "CS201";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS202ButtonPressed() {
-    url += "&class=CS202";
+    klass = "CS202";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS250ButtonPressed() {
-    url += "&class=CS250";
+    klass = "CS250";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS251ButtonPressed() {
-    url += "&class=CS251";
+    klass = "CS251";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS300ButtonPressed() {
-    url += "&class=CS300";
+    klass = "CS300";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classCS311ButtonPressed() {
-    url += "&class=CS311";
+    klass = "CS311";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
 
 void MainWindow::classOtherButtonPressed() {
-    url += "&class=Other";
+    klass = "Other";
     classWindow->closeWindow();
     locationWindow->openWindow();
 }
@@ -225,37 +216,43 @@ void MainWindow::classCancelButtonPressed() {
  * Location Window Button SLOTS
  */
 void MainWindow::locationFrontButtonPressed() {
-    url += "&location=front";
+    location = "front";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationPrinterButtonPressed() {
-    url += "&location=printer";
+    location = "printer";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationLockerButtonPressed() {
-    url += "&location=locker";
+    location = "locker";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationPenguinButtonPressed() {
-    url += "&location=laba";
+    location = "laba";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationParticleButtonPressed() {
-    url += "&location=labb";
+    location = "labb";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }
 
 void MainWindow::locationACMButtonPressed() {
-    url += "&location=acm";
+    location = "acm";
+    locationWindow->closeWindow();
+    confirmWindow->openWindow();
+}
+
+void MainWindow::locationConferenceButtonPressed() {
+    location = "conference";
     locationWindow->closeWindow();
     confirmWindow->openWindow();
 }

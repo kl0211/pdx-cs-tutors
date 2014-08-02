@@ -22,6 +22,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
+#include <QRegExpValidator>
 
 class RegisterWindow : public QWidget {
     Q_OBJECT

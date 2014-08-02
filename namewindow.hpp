@@ -24,6 +24,7 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
+#include <QRegExpValidator>
 
 class NameWindow : public QWidget {
     Q_OBJECT

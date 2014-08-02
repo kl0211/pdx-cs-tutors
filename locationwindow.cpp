@@ -19,37 +19,42 @@
 
 LocationWindow::LocationWindow(QWidget * parent) : QWidget (parent) {
     frontArea = new QPushButton("Front entrance area", parent);
-    frontArea->move(startXPos + 150, startYPos + 0);
+    frontArea->move(175, 400);
     frontArea->resize(200, 75);
     frontArea->hide();
 
     printer = new QPushButton("Back area near printer", parent);
-    printer->move(startXPos + 150, startYPos + 100);
+    printer->move(425, 400);
     printer->resize(200, 75);
     printer->hide();
 
     lockerRoom = new QPushButton("Locker room", parent);
-    lockerRoom->move(startXPos + 150, startYPos + 200);
+    lockerRoom->move(675, 400);
     lockerRoom->resize(200, 75);
     lockerRoom->hide();
 
     penguinLab = new QPushButton("FAB 88-10\n(GNU/Linux Lab A)", parent);
-    penguinLab->move(startXPos + 450, startYPos + 0);
+    penguinLab->move(50, 500);
     penguinLab->resize(200, 75);
     penguinLab->hide();
 
     particleLab = new QPushButton("FAB 88-09\n(GNU/Linux Lab B)", parent);
-    particleLab->move(startXPos + 450, startYPos + 100);
+    particleLab->move(300, 500);
     particleLab->resize(200, 75);
     particleLab->hide();
 
     acm = new QPushButton("ACM room", parent);
-    acm->move(startXPos + 450, startYPos + 200);
+    acm->move(550, 500);
     acm->resize(200, 75);
     acm->hide();
 
+    conference = new QPushButton("Conference room", parent);
+    conference->move(800, 500);
+    conference->resize(200, 75);
+    conference->hide();
+
     cancelButton = new QPushButton("Start Over", parent);
-    cancelButton->move(startXPos + 500, startYPos + 500);
+    cancelButton->move(1150, 650);
     cancelButton->resize(200, 75);
     cancelButton->hide();
 }
@@ -61,6 +66,7 @@ void LocationWindow::openWindow() {
     penguinLab->show();
     particleLab->show();
     acm->show();
+    conference->show();
     cancelButton->show();
 }
 
@@ -71,5 +77,6 @@ void LocationWindow::closeWindow() {
     penguinLab->hide();
     particleLab->hide();
     acm->hide();
+    conference->hide();
     cancelButton->hide();
 }
