@@ -34,6 +34,8 @@ RegisterWindow::RegisterWindow(QWidget * parent) : QWidget(parent) {
     IDDialog->move(startXPos + 100, startYPos + 240);
     IDDialog->resize(200, 30);
     IDDialog->setPlaceholderText("ODIN ID");
+    IDDialog->setMaxLength(9);
+    IDDialog->setValidator(new QRegExpValidator(QRegExp("[0-9]{9}")));
     IDDialog->hide();
 
     nameDialog = new QLineEdit(parent);
@@ -41,7 +43,7 @@ RegisterWindow::RegisterWindow(QWidget * parent) : QWidget(parent) {
     nameDialog->resize(200, 30);
     nameDialog->setPlaceholderText("Name");
     nameDialog->setMaxLength(20);
-    nameDialog->setValidator(new QRegExpValidator(QRegExp("([a-z]|[A-Z]){3,20}")));
+    nameDialog->setValidator(new QRegExpValidator(QRegExp("(([a-z]|[A-Z])+\\s?([a-z]|[A-Z])+){3,20}")));
     nameDialog->hide();
 
     regButton = new QPushButton("Register", parent);
