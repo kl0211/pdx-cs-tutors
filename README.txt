@@ -4,7 +4,7 @@ pdx-cs-tutors
 An electronic sign-in application for the CS Tutors at Portland State
 University
 
-Author(s): Rob Werfelmann - rob@werfelmann.com
+Author(s): Rob Werfelmann - rob AT werfelmann DOT com
 
 
 Description:
