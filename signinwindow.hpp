@@ -31,7 +31,7 @@ class SignInWindow : public QWidget {
     static const int startYPos = 100;
 
 public:
-    QPushButton * loginButton, * noIdButton;
+    QPushButton * loginButton, * noIdButton, * tutorButton;
     QLineEdit * loginDialog;
     QLabel * logo, * title, * loginText;
     QFont font;

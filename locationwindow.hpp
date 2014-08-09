@@ -20,6 +20,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QLabel>
 
 class LocationWindow : public QWidget {
     Q_OBJECT
@@ -30,6 +31,8 @@ class LocationWindow : public QWidget {
 public:
     QPushButton * frontArea, * printer, * lockerRoom, * penguinLab,
                 * particleLab, * acm, * conference, * cancelButton;
+    QLabel * text;
+    QFont font;
 
     LocationWindow(QWidget * parent = 0);
     void openWindow();

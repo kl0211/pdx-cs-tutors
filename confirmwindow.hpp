@@ -20,15 +20,16 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QLabel>
 
 class ConfirmWindow : public QWidget {
     Q_OBJECT
 
-    static const int startXPos = 300;
-    static const int startYPos = 100;
-
 public:
     QPushButton * confirmButton, * cancelButton;
+    QLabel * text, * name, * klass, * location,
+           * nameOutput, * klassOutput, * locationOutput;
+    QFont font;
 
     ConfirmWindow(QWidget * parent = 0);
     void openWindow();

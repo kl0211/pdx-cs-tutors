@@ -18,18 +18,25 @@
 #include "locationwindow.hpp"
 
 LocationWindow::LocationWindow(QWidget * parent) : QWidget (parent) {
+    font.setPointSize(24);
+    text = new QLabel("Please select the approximate location where a tutor can find you", parent);
+    text->move(100, 100);
+    text->resize(1200, 300);
+    text->hide();
+    text->setFont(font);
+
     frontArea = new QPushButton("Front entrance area", parent);
-    frontArea->move(175, 400);
+    frontArea->move(225, 350);
     frontArea->resize(200, 75);
     frontArea->hide();
 
     printer = new QPushButton("Back area near printer", parent);
-    printer->move(425, 400);
+    printer->move(575, 350);
     printer->resize(200, 75);
     printer->hide();
 
     lockerRoom = new QPushButton("Locker room", parent);
-    lockerRoom->move(675, 400);
+    lockerRoom->move(925, 350);
     lockerRoom->resize(200, 75);
     lockerRoom->hide();
 
@@ -39,17 +46,17 @@ LocationWindow::LocationWindow(QWidget * parent) : QWidget (parent) {
     penguinLab->hide();
 
     particleLab = new QPushButton("FAB 88-09\n(GNU/Linux Lab B)", parent);
-    particleLab->move(300, 500);
+    particleLab->move(400, 500);
     particleLab->resize(200, 75);
     particleLab->hide();
 
     acm = new QPushButton("ACM room", parent);
-    acm->move(550, 500);
+    acm->move(750, 500);
     acm->resize(200, 75);
     acm->hide();
 
     conference = new QPushButton("Conference room", parent);
-    conference->move(800, 500);
+    conference->move(1100, 500);
     conference->resize(200, 75);
     conference->hide();
 
@@ -60,6 +67,7 @@ LocationWindow::LocationWindow(QWidget * parent) : QWidget (parent) {
 }
 
 void LocationWindow::openWindow() {
+    text->show();
     frontArea->show();
     printer->show();
     lockerRoom->show();
@@ -71,6 +79,7 @@ void LocationWindow::openWindow() {
 }
 
 void LocationWindow::closeWindow() {
+    text->hide();
     frontArea->hide();
     printer->hide();
     lockerRoom->hide();

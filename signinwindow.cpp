@@ -33,6 +33,10 @@ SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
     noIdButton->resize(300, 80);
     noIdButton->hide();
 
+    tutorButton = new QPushButton(" ", parent);
+    tutorButton->move(1250, 0);
+    tutorButton->hide();
+
     loginDialog = new QLineEdit(parent);
     loginDialog->move(startXPos + 200, startYPos + 400);
     loginDialog->resize(200, 80);
@@ -50,13 +54,14 @@ SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
     title = new QLabel("CS Tutor Sign-In", parent);
     title->setFont(font);
     title->move(550, 0);
-    title->resize(800, 100);
+    title->resize(600, 100);
 }
 
 void SignInWindow::openWindow() {
     loginText->show();
     loginButton->show();
     noIdButton->show();
+    tutorButton->show();
     loginDialog->show();
     loginDialog->setFocus();
 }
@@ -65,6 +70,7 @@ void SignInWindow::closeWindow() {
     loginText->hide();
     loginButton->hide();
     noIdButton->hide();
+    tutorButton->hide();
     loginDialog->hide();
     loginDialog->clear();
 }

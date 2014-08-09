@@ -18,16 +18,30 @@
 #include "tutorwindow.hpp"
 
 TutorWindow::TutorWindow(QWidget * parent) : QWidget(parent) {
-    cancelButton = new QPushButton("Start Over", parent);
-    cancelButton->move(startXPos + 500, startYPos + 500);
-    cancelButton->resize(200, 75);
-    cancelButton->hide();
+    assignButton = new QPushButton("Assign/Unassign me to\nthe selected student", parent);
+    assignButton->move(300, 600);
+    assignButton->resize(200, 75);
+    assignButton->hide();
+
+    removeButton = new QPushButton("Remove selected\nstudent from list", parent);
+    removeButton->move(550, 600);
+    removeButton->resize(200, 75);
+    removeButton->hide();
+
+    backButton = new QPushButton("Back", parent);
+    backButton->move(800, 600);
+    backButton->resize(200, 75);
+    backButton->hide();
 }
 
 void TutorWindow::openWindow() {
-
+    assignButton->show();
+    removeButton->show();
+    backButton->show();
 }
 
 void TutorWindow::closeWindow() {
-
+    assignButton->hide();
+    removeButton->hide();
+    backButton->hide();
 }

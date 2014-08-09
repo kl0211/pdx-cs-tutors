@@ -18,46 +18,83 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define HOST "localhost"
+#define PORT "8080"
+
 #include <QMainWindow>
 #include <string>
-#include <curlpp/cURLpp.hpp>
-#include <curlpp/Easy.hpp>
+//#include <curlpp/cURLpp.hpp>
+//#include <curlpp/Easy.hpp>
+//#include <curlpp/Options.hpp>
 #include <QTextStream>
 #include <QLabel>
+#include <QTime>
+#include <QTableWidget>
+#include <QHeaderView>
+
 using namespace std;
-using namespace cURLpp;
 
 class SignInWindow;
 class NameWindow;
 class RegisterWindow;
 class ClassWindow;
 class LocationWindow;
+class TutorWindow;
 class ConfirmWindow;
+
+struct Student {
+    Student(QString, QString, QString, QString);
+    ~Student();
+
+    QString name, klass, location, timeIn, tutor;
+    Student * next;
+};
+
+struct Queue {
+    Queue();
+    ~Queue();
+    void add(Student *);
+    void remove(QString);
+    Student * head;
+};
 
 const int XRES = 1366, YRES = 768;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-    Easy * handle;
+    //cURLpp::Easy easyHandle;
+    int numberOnList;
     QString url, id, name, klass, location;
     QLabel * errorText;
+    QTableWidget * theList;
+    QTableWidgetItem * item;
+    Queue queue;
     SignInWindow * signInWindow;
     NameWindow * nameWindow;
     RegisterWindow * registerWindow;
     ClassWindow * classWindow;
     LocationWindow * locationWindow;
+    TutorWindow * tutorWindow;
     ConfirmWindow * confirmWindow;
+
+    void showConfirm();
+    void hideConfirm();
+    QString fullLocation(QString);
+    void buildTable(int);
+    void updateTable();
 
 private slots:
     void signInLogInButtonPressed();
     void signInNoRegLogInButtonPressed();
+    void signInTutorButtonPressed();
 
     void nameLogInButtonPressed();
     void nameCancelButtonPressed();
 
-    void registerCancelButtonPressed();
     void registerRegisterButtonPressed();
+    void registerCancelButtonPressed();
+    void registerIDDialogEntered();
 
     void classCS161ButtonPressed();
     void classCS162ButtonPressed();
@@ -79,6 +116,10 @@ private slots:
     void locationACMButtonPressed();
     void locationConferenceButtonPressed();
     void locationCancelButtonPressed();
+
+    void tutorAssignButtonPressed();
+    void tutorRemoveButtonPressed();
+    void tutorBackButtonPressed();
 
     void confirmConfirmButtonPressed();
     void confirmCancelButtonPressed();

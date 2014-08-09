@@ -17,14 +17,13 @@
 
 #ifndef NAMEWINDOW_HPP
 #define NAMEWINDOW_HPP
-#define HOST "localhost"
-#define PORT "8080"
 
 #include <QWidget>
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
 #include <QRegExpValidator>
+#include <ctime>
 
 class NameWindow : public QWidget {
     Q_OBJECT
