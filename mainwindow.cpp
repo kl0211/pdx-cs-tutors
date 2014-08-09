@@ -107,7 +107,7 @@ MainWindow::MainWindow() {
     errorText->hide();
 
     numberOnList = 0;
-    theList = NULL;
+    theList = new QTableWidget(0, 5, this);
     buildTable(numberOnList);
 
     signInWindow->openWindow();
@@ -469,12 +469,11 @@ QString MainWindow::fullLocation(QString loc) {
 }
 
 void MainWindow::buildTable(int rows) {
-    if (theList)
-        theList->~QTableWidget();
-    theList = new QTableWidget(rows, 5, this);
+    theList->removeRow(rows);
+    theList->insertRow(rows);
     theList->move(260, 100);
     theList->resize(850, 300);
-    theList->setHorizontalHeaderLabels(QStringList() << "Name" << "Class" << "Location" << "Sign-in Time" << "Helped by");
+    theList->setHorizontalHeaderLabels(QStringList() << "Name" << "Class" << "Location" << "Sign-in Time" << "Being Helped by");
     theList->setEditTriggers(QAbstractItemView::NoEditTriggers);
     theList->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     theList->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
