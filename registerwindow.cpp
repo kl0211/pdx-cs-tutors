@@ -18,61 +18,52 @@
 #include "registerwindow.hpp"
 
 RegisterWindow::RegisterWindow(QWidget * parent) : QWidget(parent) {
-    IDLabel = new QLabel(parent);
-    IDLabel->move(startXPos + 100, startYPos + 200);
-    IDLabel->resize(400, 30);
-    IDLabel->setText("Scan your PSU ID barcode or enter ODIN ID #");
-    IDLabel->hide();
+    font.setPointSize(24);
+    text = new QLabel("Looks like this is your first time signing in.\n"
+                      "Please enter your name below to associate your ID number with.\n"
+                      "Make sure you spell your name correctly. You won't be able to change it later.", parent);
+    text->move(100, 100);
+    text->resize(1200, 300);
+    text->hide();
+    text->setFont(font);
 
-    nameLabel = new QLabel(parent);
-    nameLabel->move(startXPos + 100, startYPos + 300);
+    nameLabel = new QLabel("Enter your name below", parent);
+    nameLabel->move(startXPos + 200, startYPos + 350);
     nameLabel->resize(400, 30);
-    nameLabel->setText("Enter your name");
     nameLabel->hide();
 
-    IDDialog = new QLineEdit(parent);
-    IDDialog->move(startXPos + 100, startYPos + 240);
-    IDDialog->resize(200, 30);
-    IDDialog->setPlaceholderText("ODIN ID");
-    IDDialog->setMaxLength(9);
-    IDDialog->setValidator(new QRegExpValidator(QRegExp("[0-9]{9}")));
-    IDDialog->hide();
+    regButton = new QPushButton("Sign-in", parent);
+    regButton->move(startXPos + 400, startYPos + 400);
+    regButton->resize(200, 80);
+    regButton->hide();
+
+    cancelButton = new QPushButton("Cancel", parent);
+    cancelButton->move(startXPos + 250, startYPos + 550);
+    cancelButton->resize(300, 80);
+    cancelButton->hide();
 
     nameDialog = new QLineEdit(parent);
-    nameDialog->move(startXPos + 100, startYPos + 340);
-    nameDialog->resize(200, 30);
+    nameDialog->move(startXPos + 200, startYPos + 400);
+    nameDialog->resize(200, 80);
     nameDialog->setPlaceholderText("Name");
     nameDialog->setMaxLength(20);
     nameDialog->setValidator(new QRegExpValidator(QRegExp("(([a-z]|[A-Z])+\\s?([a-z]|[A-Z])+){3,20}")));
     nameDialog->hide();
 
-    regButton = new QPushButton("Register", parent);
-    regButton->move(startXPos + 0, startYPos + 500);
-    regButton->resize(300, 75);
-    regButton->hide();
-
-    cancelButton = new QPushButton("Cancel", parent);
-    cancelButton->move(startXPos + 500, startYPos + 500);
-    cancelButton->resize(300, 75);
-    cancelButton->hide();
-
 }
 
 void RegisterWindow::openWindow() {
-    IDLabel->show();
+    text->show();
     nameLabel->show();
-    IDDialog->show();
-    IDDialog->setFocus();
     nameDialog->show();
     regButton->show();
     cancelButton->show();
+    nameDialog->setFocus();
 }
 
 void RegisterWindow::closeWindow() {
-    IDLabel->hide();
+    text->hide();
     nameLabel->hide();
-    IDDialog->hide();
-    IDDialog->clear();
     nameDialog->hide();
     nameDialog->clear();
     regButton->hide();

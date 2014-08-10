@@ -32,6 +32,16 @@ with a barcode reader to quickly sign-in without having to type anything
 in. Tutors will also be able to quickly assign themselves to a student and
 remove them from the waiting list.
 
+To remove students from the list, a tutor must be listed in a file named
+"TutorList.txt". Each line in the file consists of a 9-digit number
+followed by a comma (,) and the name of the tutor.
+
+Registered students are stored in a binary file named "RegInfo.dat". This
+file is read in every start-up and written to after every register.
+
+When the application is closed, it will dump all helped students to a
+commas separated value file named "output.csv". This file can be useful for
+data and statistical analysis.
 
 
 Download/Build Instructions:

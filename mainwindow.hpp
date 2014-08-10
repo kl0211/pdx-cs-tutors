@@ -22,15 +22,16 @@
 #define PORT "8080"
 
 #include <QMainWindow>
-#include <string>
 //#include <curlpp/cURLpp.hpp>
 //#include <curlpp/Easy.hpp>
 //#include <curlpp/Options.hpp>
 #include <QTextStream>
+#include <QFile>
 #include <QLabel>
 #include <QTime>
 #include <QTableWidget>
 #include <QHeaderView>
+#include <cmath>
 
 using namespace std;
 
@@ -54,8 +55,35 @@ struct Queue {
     Queue();
     ~Queue();
     void add(Student *);
-    void remove(QString);
-    Student * head;
+    bool contains(QString);
+    void removeFromList(QString);
+    void deleteFromList(QString);
+    void addToFinished(Student * &);
+    Student * toBeHelped;
+    Student * finished;
+};
+
+struct RegInfo {
+    RegInfo(QString, QString);
+    QString id;
+    QString name;
+    RegInfo * next;
+};
+
+struct Database {
+    Database();
+    ~Database();
+    void add(QString, QString);
+    RegInfo * get(QString);
+    RegInfo * getTutor(QString);
+
+private:
+    int tableSize;
+    RegInfo * tutors;
+    RegInfo ** table;
+    void addTutor(RegInfo *);
+    int hash(QString);
+    void writeOut();
 };
 
 const int XRES = 1366, YRES = 768;
@@ -63,13 +91,12 @@ const int XRES = 1366, YRES = 768;
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-    //cURLpp::Easy easyHandle;
     int numberOnList;
     QString url, id, name, klass, location;
     QLabel * errorText;
     QTableWidget * theList;
-    QTableWidgetItem * item;
     Queue queue;
+    Database database;
     SignInWindow * signInWindow;
     NameWindow * nameWindow;
     RegisterWindow * registerWindow;
@@ -87,7 +114,6 @@ class MainWindow : public QMainWindow {
 private slots:
     void signInLogInButtonPressed();
     void signInNoRegLogInButtonPressed();
-    void signInTutorButtonPressed();
 
     void nameLogInButtonPressed();
     void nameCancelButtonPressed();

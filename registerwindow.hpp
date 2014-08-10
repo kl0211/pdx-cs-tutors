@@ -32,8 +32,9 @@ class RegisterWindow : public QWidget {
 
 public:
     QPushButton * regButton, * cancelButton;
-    QLineEdit * IDDialog, * nameDialog;
-    QLabel * IDLabel, * nameLabel;
+    QLineEdit * nameDialog;
+    QLabel * nameLabel, * text;
+    QFont font;
 
     RegisterWindow(QWidget * parent = 0);
     void openWindow();
