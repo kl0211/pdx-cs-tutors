@@ -34,7 +34,7 @@ Student::Student(QString name, QString klass, QString location, QString timeIn) 
 }
 
 Student::~Student() {
-    delete next;
+    if (next) delete next;
 }
 
 Queue::Queue() {
@@ -43,19 +43,23 @@ Queue::Queue() {
 }
 
 Queue::~Queue() {
-    Student * current = finished;
-    QFile data("output.csv");
-    if (data.open(QFile::WriteOnly | QFile::Truncate)) {
-        QTextStream out(&data);
-        while (current) {
-            out << current->name << ',' << current->klass << ',' <<
-                   current->location << ',' << current->timeIn << ',' <<
-                   current->tutor << '\n';
-            current = current->next;
+    if (finished) {
+        QString fileName = QDateTime::currentDateTime().toString("yyyy-MM-dd-HH:mm");
+        fileName += ".csv";
+        Student * current = finished;
+        QFile data(fileName);
+        if (data.open(QFile::WriteOnly | QFile::Truncate)) {
+            QTextStream out(&data);
+            while (current) {
+                out << current->name << ',' << current->klass << ',' <<
+                       current->location << ',' << current->timeIn << ',' <<
+                       current->tutor << '\n';
+                current = current->next;
+            }
         }
+        delete finished;
     }
     if (toBeHelped) delete toBeHelped;
-    if (finished) delete finished;
 }
 
 void Queue::add(Student * toAdd) {
@@ -159,6 +163,10 @@ RegInfo::RegInfo(QString id, QString name) {
     this->next = NULL;
 }
 
+RegInfo::~RegInfo() {
+    if (next) delete next;
+}
+
 Database::Database() {
     tableSize = 21;
     tutors = NULL;
@@ -193,6 +201,9 @@ Database::Database() {
 
 Database::~Database() {
     writeOut();
+    for (int i = 0; i < tableSize; ++i) {
+        if (table[i]) delete table[i];
+    }
 }
 
 void Database::add(QString id, QString name) {
@@ -257,7 +268,7 @@ int Database::hash(QString id) {
         return -1;  //Nothing to hash
 
     for (int i = 0; i < length; ++i)
-        sum += id.at(i).digitValue() *                              //sum the string char * 7 powered to string length - index - 1
+        sum += id.at(i).digitValue() *                  //sum the string char * 7 powered to string length - index - 1
         abs(pow(float(7), float((length - i - 1))));    //absolute value to prevent negative numbers
 
     return sum % tableSize; //return the sum modulous the hash table size

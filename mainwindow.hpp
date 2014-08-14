@@ -65,6 +65,7 @@ struct Queue {
 
 struct RegInfo {
     RegInfo(QString, QString);
+    ~RegInfo();
     QString id;
     QString name;
     RegInfo * next;
