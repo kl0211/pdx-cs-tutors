@@ -44,115 +44,116 @@ class TutorWindow;
 class ConfirmWindow;
 
 struct Student {
-    Student(QString, QString, QString, QString);
-    ~Student();
+  Student(QString, QString, QString, QString, QString);
+  ~Student();
 
-    QString name, klass, location, timeIn, tutor;
-    Student * next;
+  QString id, name, klass, location, signInTime, tutor;
+  Student * next;
 };
 
 struct Queue {
-    Queue();
-    ~Queue();
-    void add(Student *);
-    bool contains(QString);
-    void removeFromList(QString);
-    void deleteFromList(QString);
-    void addToFinished(Student * &);
-    Student * toBeHelped;
-    Student * finished;
+  Queue();
+  ~Queue();
+  void add(Student *);
+  bool containsId(QString);
+  bool containsName(QString);
+  void removeFromList(QString);
+  void deleteFromList(QString);
+  void addToFinished(Student *);
+  Student * toBeHelped;
+  Student * finished;
 };
 
 struct RegInfo {
-    RegInfo(QString, QString);
-    ~RegInfo();
-    QString id;
-    QString name;
-    RegInfo * next;
+  RegInfo(QString, QString);
+  ~RegInfo();
+  QString id;
+  QString name;
+  RegInfo * next;
 };
 
 struct Database {
-    Database();
-    ~Database();
-    void add(QString, QString);
-    RegInfo * get(QString);
-    RegInfo * getTutor(QString);
+  Database();
+  ~Database();
+  void add(QString, QString);
+  RegInfo * getStudent(QString);
+  RegInfo * getTutor(QString);
 
 private:
-    int tableSize;
-    RegInfo * tutors;
-    RegInfo ** table;
-    void addTutor(RegInfo *);
-    int hash(QString);
-    void writeOut();
+  int tableSize;
+  RegInfo * tutors;
+  RegInfo ** table;
+  void addTutor(RegInfo *);
+  int hash(QString);
+  void writeOut();
 };
 
 const int XRES = 1366, YRES = 768;
 
 class MainWindow : public QMainWindow {
-    Q_OBJECT
+  Q_OBJECT
 
-    int numberOnList;
-    QString url, id, name, klass, location;
-    QLabel * errorText;
-    QTableWidget * theList;
-    Queue queue;
-    Database database;
-    SignInWindow * signInWindow;
-    NameWindow * nameWindow;
-    RegisterWindow * registerWindow;
-    ClassWindow * classWindow;
-    LocationWindow * locationWindow;
-    TutorWindow * tutorWindow;
-    ConfirmWindow * confirmWindow;
+  int numberOnList;
+  QString url, id, name, klass, location;
+  QLabel * errorText;
+  QTableWidget * theList;
+  Queue queue;
+  Database database;
+  SignInWindow * signInWindow;
+  NameWindow * nameWindow;
+  RegisterWindow * registerWindow;
+  ClassWindow * classWindow;
+  LocationWindow * locationWindow;
+  TutorWindow * tutorWindow;
+  ConfirmWindow * confirmWindow;
 
-    void showConfirm();
-    void hideConfirm();
-    QString fullLocation(QString);
-    void buildTable(int);
-    void updateTable();
+  void showConfirm();
+  void hideConfirm();
+  QString fullLocation(QString);
+  void buildTable(int);
+  void updateTable();
 
 private slots:
-    void signInLogInButtonPressed();
-    void signInNoRegLogInButtonPressed();
+  void signInLogInButtonPressed();
+  void signInNoRegLogInButtonPressed();
 
-    void nameLogInButtonPressed();
-    void nameCancelButtonPressed();
+  void nameLogInButtonPressed();
+  void nameCancelButtonPressed();
 
-    void registerRegisterButtonPressed();
-    void registerCancelButtonPressed();
-    void registerIDDialogEntered();
+  void registerRegisterButtonPressed();
+  void registerCancelButtonPressed();
+  void registerIDDialogEntered();
 
-    void classCS161ButtonPressed();
-    void classCS162ButtonPressed();
-    void classCS163ButtonPressed();
-    void classCS201ButtonPressed();
-    void classCS202ButtonPressed();
-    void classCS250ButtonPressed();
-    void classCS251ButtonPressed();
-    void classCS300ButtonPressed();
-    void classCS311ButtonPressed();
-    void classOtherButtonPressed();
-    void classCancelButtonPressed();
+  void classCS161ButtonPressed();
+  void classCS162ButtonPressed();
+  void classCS163ButtonPressed();
+  void classCS201ButtonPressed();
+  void classCS202ButtonPressed();
+  void classCS250ButtonPressed();
+  void classCS251ButtonPressed();
+  void classCS300ButtonPressed();
+  void classCS311ButtonPressed();
+  void classOtherButtonPressed();
+  void classCancelButtonPressed();
 
-    void locationFrontButtonPressed();
-    void locationPrinterButtonPressed();
-    void locationLockerButtonPressed();
-    void locationPenguinButtonPressed();
-    void locationParticleButtonPressed();
-    void locationACMButtonPressed();
-    void locationConferenceButtonPressed();
-    void locationCancelButtonPressed();
+  void locationFrontButtonPressed();
+  void locationPrinterButtonPressed();
+  void locationLockerButtonPressed();
+  void locationPenguinButtonPressed();
+  void locationParticleButtonPressed();
+  void locationACMButtonPressed();
+  void locationConferenceButtonPressed();
+  void locationCancelButtonPressed();
 
-    void tutorAssignButtonPressed();
-    void tutorRemoveButtonPressed();
-    void tutorBackButtonPressed();
+  void tutorAssignButtonPressed();
+  void tutorRemoveButtonPressed();
+  void tutorBackButtonPressed();
 
-    void confirmConfirmButtonPressed();
-    void confirmCancelButtonPressed();
+  void confirmConfirmButtonPressed();
+  void confirmCancelButtonPressed();
 
 public:
-    MainWindow();
+  MainWindow();
 };
 
 #endif

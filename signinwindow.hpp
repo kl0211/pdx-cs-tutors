@@ -25,20 +25,20 @@
 #include <QRegExpValidator>
 
 class SignInWindow : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-    static const int startXPos = 300;
-    static const int startYPos = 100;
+  static const int startXPos = 300;
+  static const int startYPos = 100;
 
 public:
-    QPushButton * loginButton, * noIdButton;
-    QLineEdit * loginDialog;
-    QLabel * logo, * title, * loginText;
-    QFont font;
+  QPushButton * loginButton, * noIdButton;
+  QLineEdit * loginDialog;
+  QLabel * logo, * title, * loginText;
+  QFont font;
 
-    SignInWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
+  SignInWindow(QWidget * parent = 0);
+  void openWindow();
+  void closeWindow();
 };
 
 #endif

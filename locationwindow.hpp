@@ -23,20 +23,20 @@
 #include <QLabel>
 
 class LocationWindow : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-    static const int startXPos = 300;
-    static const int startYPos = 100;
+  static const int startXPos = 300;
+  static const int startYPos = 100;
 
 public:
-    QPushButton * frontArea, * printer, * lockerRoom, * penguinLab,
-                * particleLab, * acm, * conference, * cancelButton;
-    QLabel * text;
-    QFont font;
+  QPushButton * frontArea, * printer, * lockerRoom, * penguinLab,
+    * particleLab, * acm, * conference, * cancelButton;
+  QLabel * text;
+  QFont font;
 
-    LocationWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
+  LocationWindow(QWidget * parent = 0);
+  void openWindow();
+  void closeWindow();
 };
 
 #endif

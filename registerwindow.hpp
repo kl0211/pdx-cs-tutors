@@ -25,20 +25,20 @@
 #include <QRegExpValidator>
 
 class RegisterWindow : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-    static const int startXPos = 300;
-    static const int startYPos = 100;
+  static const int startXPos = 300;
+  static const int startYPos = 100;
 
 public:
-    QPushButton * regButton, * cancelButton;
-    QLineEdit * nameDialog;
-    QLabel * nameLabel, * text;
-    QFont font;
+  QPushButton * regButton, * cancelButton;
+  QLineEdit * nameDialog;
+  QLabel * nameLabel, * text;
+  QFont font;
 
-    RegisterWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
+  RegisterWindow(QWidget * parent = 0);
+  void openWindow();
+  void closeWindow();
 };
 
 #endif

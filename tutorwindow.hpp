@@ -22,14 +22,14 @@
 #include <QPushButton>
 
 class TutorWindow : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    QPushButton * assignButton, * removeButton, * backButton;
+  QPushButton * assignButton, * removeButton, * backButton;
 
-    TutorWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
+  TutorWindow(QWidget * parent = 0);
+  void openWindow();
+  void closeWindow();
 };
 
 #endif

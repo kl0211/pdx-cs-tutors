@@ -23,18 +23,18 @@
 #include <QLabel>
 
 class ClassWindow : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    QPushButton * cancelButton, * cs161, * cs162, * cs163,
-                * cs201, * cs202, * cs250, * cs251, * cs300,
-                * cs311, * other;
-    QLabel * text;
-    QFont font;
+  QPushButton * cancelButton, * cs161, * cs162, * cs163,
+    * cs201, * cs202, * cs250, * cs251, * cs300,
+    * cs311, * other;
+  QLabel * text;
+  QFont font;
 
-    ClassWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
+  ClassWindow(QWidget * parent = 0);
+  void openWindow();
+  void closeWindow();
 };
 
 #endif

@@ -26,19 +26,19 @@
 #include <ctime>
 
 class NameWindow : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
-    static const int startXPos = 300;
-    static const int startYPos = 100;
+  static const int startXPos = 300;
+  static const int startYPos = 100;
 
 public:
-    QPushButton * loginButton, * cancelButton;
-    QLineEdit * nameDialog;
-    QLabel * loginText;
+  QPushButton * loginButton, * cancelButton;
+  QLineEdit * nameDialog;
+  QLabel * loginText;
 
-    NameWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
+  NameWindow(QWidget * parent = 0);
+  void openWindow();
+  void closeWindow();
 };
 
 #endif

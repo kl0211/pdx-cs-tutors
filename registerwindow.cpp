@@ -18,54 +18,54 @@
 #include "registerwindow.hpp"
 
 RegisterWindow::RegisterWindow(QWidget * parent) : QWidget(parent) {
-    font.setPointSize(24);
-    text = new QLabel("Looks like this is your first time signing in.\n"
-                      "Please enter your name below to associate your ID number with.\n"
-                      "Make sure you spell your name correctly. You won't be able to change it later.", parent);
-    text->move(100, 100);
-    text->resize(1200, 300);
-    text->hide();
-    text->setFont(font);
+  font.setPointSize(24);
+  text = new QLabel("Looks like this is your first time signing in.\n"
+                    "Please enter your name below to associate your ID number with.\n"
+                    "Make sure you spell your name correctly. You won't be able to change it later.", parent);
+  text->move(100, 100);
+  text->resize(1200, 300);
+  text->hide();
+  text->setFont(font);
 
-    nameLabel = new QLabel("Enter your name below", parent);
-    nameLabel->move(startXPos + 200, startYPos + 350);
-    nameLabel->resize(400, 30);
-    nameLabel->hide();
+  nameLabel = new QLabel("Enter your name below", parent);
+  nameLabel->move(startXPos + 200, startYPos + 350);
+  nameLabel->resize(400, 30);
+  nameLabel->hide();
 
-    regButton = new QPushButton("Sign-in", parent);
-    regButton->move(startXPos + 400, startYPos + 400);
-    regButton->resize(200, 80);
-    regButton->hide();
+  regButton = new QPushButton("Sign-in", parent);
+  regButton->move(startXPos + 400, startYPos + 400);
+  regButton->resize(200, 80);
+  regButton->hide();
 
-    cancelButton = new QPushButton("Cancel", parent);
-    cancelButton->move(startXPos + 250, startYPos + 550);
-    cancelButton->resize(300, 80);
-    cancelButton->hide();
+  cancelButton = new QPushButton("Cancel", parent);
+  cancelButton->move(startXPos + 250, startYPos + 550);
+  cancelButton->resize(300, 80);
+  cancelButton->hide();
 
-    nameDialog = new QLineEdit(parent);
-    nameDialog->move(startXPos + 200, startYPos + 400);
-    nameDialog->resize(200, 80);
-    nameDialog->setPlaceholderText("Name");
-    nameDialog->setMaxLength(20);
-    nameDialog->setValidator(new QRegExpValidator(QRegExp("(([a-z]|[A-Z])+\\s?([a-z]|[A-Z])+){3,20}")));
-    nameDialog->hide();
+  nameDialog = new QLineEdit(parent);
+  nameDialog->move(startXPos + 200, startYPos + 400);
+  nameDialog->resize(200, 80);
+  nameDialog->setPlaceholderText("Name");
+  nameDialog->setMaxLength(20);
+  nameDialog->setValidator(new QRegExpValidator(QRegExp("(([a-z]|[A-Z])+\\s?([a-z]|[A-Z])+){3,20}")));
+  nameDialog->hide();
 
 }
 
 void RegisterWindow::openWindow() {
-    text->show();
-    nameLabel->show();
-    nameDialog->show();
-    regButton->show();
-    cancelButton->show();
-    nameDialog->setFocus();
+  text->show();
+  nameLabel->show();
+  nameDialog->show();
+  regButton->show();
+  cancelButton->show();
+  nameDialog->setFocus();
 }
 
 void RegisterWindow::closeWindow() {
-    text->hide();
-    nameLabel->hide();
-    nameDialog->hide();
-    nameDialog->clear();
-    regButton->hide();
-    cancelButton->hide();
+  text->hide();
+  nameLabel->hide();
+  nameDialog->hide();
+  nameDialog->clear();
+  regButton->hide();
+  cancelButton->hide();
 }

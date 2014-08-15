@@ -23,17 +23,17 @@
 #include <QLabel>
 
 class ConfirmWindow : public QWidget {
-    Q_OBJECT
+  Q_OBJECT
 
 public:
-    QPushButton * confirmButton, * cancelButton;
-    QLabel * text, * name, * klass, * location,
-           * nameOutput, * klassOutput, * locationOutput;
-    QFont font;
+  QPushButton * confirmButton, * cancelButton;
+  QLabel * text, * name, * klass, * location,
+    * nameOutput, * klassOutput, * locationOutput;
+  QFont font;
 
-    ConfirmWindow(QWidget * parent = 0);
-    void openWindow();
-    void closeWindow();
+  ConfirmWindow(QWidget * parent = 0);
+  void openWindow();
+  void closeWindow();
 };
 
 #endif
