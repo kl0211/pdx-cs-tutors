@@ -28,10 +28,8 @@
 class NameWindow : public QWidget {
   Q_OBJECT
 
-  static const int startXPos = 300;
-  static const int startYPos = 100;
-
 public:
+  QFont font, buttonFont;
   QPushButton * loginButton, * cancelButton;
   QLineEdit * nameDialog;
   QLabel * loginText;

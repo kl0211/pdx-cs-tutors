@@ -18,51 +18,63 @@
 #include "locationwindow.hpp"
 
 LocationWindow::LocationWindow(QWidget * parent) : QWidget (parent) {
-  font.setPointSize(24);
+  textFont.setPointSize(24);
+
+  buttonFont.setPointSize(16);
+  buttonFont.setBold(true);
+
   text = new QLabel("Please select the approximate location where a tutor can find you", parent);
   text->move(100, 100);
   text->resize(1200, 300);
   text->hide();
-  text->setFont(font);
+  text->setFont(textFont);
 
-  frontArea = new QPushButton("Front entrance area", parent);
+  frontArea = new QPushButton("Front entrance\narea", parent);
   frontArea->move(225, 350);
   frontArea->resize(200, 75);
+  frontArea->setFont(buttonFont);
   frontArea->hide();
 
-  printer = new QPushButton("Back area near printer", parent);
+  printer = new QPushButton("Back area\nnear printer", parent);
   printer->move(575, 350);
   printer->resize(200, 75);
+  printer->setFont(buttonFont);
   printer->hide();
 
   lockerRoom = new QPushButton("Locker room", parent);
   lockerRoom->move(925, 350);
   lockerRoom->resize(200, 75);
+  lockerRoom->setFont(buttonFont);
   lockerRoom->hide();
 
   penguinLab = new QPushButton("FAB 88-10\n(GNU/Linux Lab A)", parent);
   penguinLab->move(50, 500);
   penguinLab->resize(200, 75);
+  penguinLab->setFont(buttonFont);
   penguinLab->hide();
 
   particleLab = new QPushButton("FAB 88-09\n(GNU/Linux Lab B)", parent);
   particleLab->move(400, 500);
   particleLab->resize(200, 75);
+  particleLab->setFont(buttonFont);
   particleLab->hide();
 
   acm = new QPushButton("ACM room", parent);
   acm->move(750, 500);
   acm->resize(200, 75);
+  acm->setFont(buttonFont);
   acm->hide();
 
   conference = new QPushButton("Conference room", parent);
   conference->move(1100, 500);
   conference->resize(200, 75);
+  conference->setFont(buttonFont);
   conference->hide();
 
   cancelButton = new QPushButton("Start Over", parent);
   cancelButton->move(1150, 650);
   cancelButton->resize(200, 75);
+  cancelButton->setFont(buttonFont);
   cancelButton->hide();
 }
 

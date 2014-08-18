@@ -29,7 +29,7 @@ public:
   QPushButton * confirmButton, * cancelButton;
   QLabel * text, * name, * klass, * location,
     * nameOutput, * klassOutput, * locationOutput;
-  QFont font;
+  QFont textFont, buttonFont;
 
   ConfirmWindow(QWidget * parent = 0);
   void openWindow();

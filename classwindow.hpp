@@ -30,7 +30,7 @@ public:
     * cs201, * cs202, * cs250, * cs251, * cs300,
     * cs311, * other;
   QLabel * text;
-  QFont font;
+  QFont textFont, buttonFont;
 
   ClassWindow(QWidget * parent = 0);
   void openWindow();

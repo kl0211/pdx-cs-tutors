@@ -18,31 +18,37 @@
 #include "signinwindow.hpp"
 
 SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
-  loginText = new QLabel("Welcome! Please scan your barcode or type in your ODIN ID below", parent);
-  loginText->move(startXPos + 200, startYPos + 350);
-  loginText->resize(400, 30);
+  font.setPointSize(32);
+  font.setBold(true);
+
+  buttonFont.setPointSize(20);
+  buttonFont.setBold(true);
+
+  loginText = new QLabel("Welcome! Please scan your PSU ID barcode or type in your ODIN ID below", parent);
+  loginText->move(275, 425);
+  loginText->resize(1300, 50);
+  loginText->setFont(buttonFont);
   loginText->hide();
 
   loginButton = new QPushButton("Sign-in", parent);
-  loginButton->move(startXPos + 400, startYPos + 400);
+  loginButton->move(700, 500);
   loginButton->resize(200, 80);
   loginButton->hide();
+  loginButton->setFont(buttonFont);
 
-  noIdButton = new QPushButton("Sign-in without registering", parent);
-  noIdButton->move(startXPos + 250, startYPos + 550);
+  noIdButton = new QPushButton("Sign-in without\nregistering", parent);
+  noIdButton->move(550, 650);
   noIdButton->resize(300, 80);
+  noIdButton->setFont(buttonFont);
   noIdButton->hide();
 
   loginDialog = new QLineEdit(parent);
-  loginDialog->move(startXPos + 200, startYPos + 400);
+  loginDialog->move(500, 500);
   loginDialog->resize(200, 80);
   loginDialog->setPlaceholderText("ODIN ID");
   loginDialog->setMaxLength(9);
   loginDialog->setValidator(new QRegExpValidator(QRegExp("[0-9]{9}")));
   loginDialog->hide();
-
-  font.setPointSize(32);
-  font.setBold(true);
 
   logo = new QLabel("<img src='psulogo.gif' />", parent);
   logo->resize(300,100);

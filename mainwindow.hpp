@@ -18,13 +18,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#define HOST "localhost"
-#define PORT "8080"
-
 #include <QMainWindow>
-//#include <curlpp/cURLpp.hpp>
-//#include <curlpp/Easy.hpp>
-//#include <curlpp/Options.hpp>
 #include <QTextStream>
 #include <QFile>
 #include <QLabel>
@@ -44,10 +38,11 @@ class TutorWindow;
 class ConfirmWindow;
 
 struct Student {
-  Student(QString, QString, QString, QString, QString);
+  Student(QString, QString, QString, QString, QTime);
   ~Student();
 
-  QString id, name, klass, location, signInTime, tutor;
+  QString id, name, klass, location, tutor;
+  QTime signInTime, helpedTime, finishedTime;
   Student * next;
 };
 
@@ -64,6 +59,23 @@ struct Queue {
   Student * finished;
 };
 
+struct Tutor {
+    Tutor(QString, QString);
+    ~Tutor();
+
+    QString id, name;
+    Tutor * next;
+};
+
+struct TutorsOnDuty {
+    TutorsOnDuty();
+    ~TutorsOnDuty();
+    void add(Tutor *);
+    void remove(QString);
+    bool containsId(QString);
+    Tutor * head;
+};
+
 struct RegInfo {
   RegInfo(QString, QString);
   ~RegInfo();
@@ -75,7 +87,7 @@ struct RegInfo {
 struct Database {
   Database();
   ~Database();
-  void add(QString, QString);
+  void addStudent(QString, QString);
   RegInfo * getStudent(QString);
   RegInfo * getTutor(QString);
 
@@ -94,9 +106,11 @@ class MainWindow : public QMainWindow {
   Q_OBJECT
 
   int numberOnList;
+  int numberOfTutorsOnDuty;
   QString url, id, name, klass, location;
   QLabel * errorText;
-  QTableWidget * theList;
+  QTableWidget * theList, * tutorsOnDutyList;
+  TutorsOnDuty tutorsOnDuty;
   Queue queue;
   Database database;
   SignInWindow * signInWindow;
@@ -112,6 +126,8 @@ class MainWindow : public QMainWindow {
   QString fullLocation(QString);
   void buildTable(int);
   void updateTable();
+  void buildTutorList(int);
+  void updateTutorList();
 
 private slots:
   void signInLogInButtonPressed();
@@ -147,6 +163,7 @@ private slots:
 
   void tutorAssignButtonPressed();
   void tutorRemoveButtonPressed();
+  void tutorSignInButtonPressed();
   void tutorBackButtonPressed();
 
   void confirmConfirmButtonPressed();

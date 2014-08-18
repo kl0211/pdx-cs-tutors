@@ -24,20 +24,44 @@
 #include "tutorwindow.hpp"
 #include "confirmwindow.hpp"
 
-Student::Student(QString id, QString name, QString klass, QString location, QString timeIn) {
+/**
+ * @brief Student::Student
+ *      Constructor for Student class
+ * @param id
+ *      The student's ODIN ID number
+ * @param name
+ *      The student's name
+ * @param klass
+ *      The student's course
+ * @param location
+ *      The student's location
+ * @param timeIn
+ *      The time at which the student signed up
+ */
+Student::Student(QString id, QString name, QString klass, QString location, QTime timeIn) {
   this->id = id;
   this->name = name;
   this->klass = klass;
   this->location = location;
   this->signInTime = timeIn;
   this->tutor = "";
+  this->helpedTime = QTime();
+  this->finishedTime = QTime();
   this->next = nullptr;
 }
 
+/**
+ * @brief Student::~Student
+ *      Destructor for the Student node. If there is a next ptr, delete it.
+ */
 Student::~Student() {
   if (next != nullptr) delete next;
 }
 
+/**
+ * @brief Queue::Queue
+ *      Constructor for the Queue
+ */
 Queue::Queue() {
   this->toBeHelped = nullptr;
   this->finished = nullptr;
@@ -58,10 +82,12 @@ Queue::~Queue() {
     QFile data(fileName);
     if (data.open(QFile::WriteOnly | QFile::Truncate)) {
       QTextStream out(&data);
+      out << "Class,Location,Time In,Time Helped,Time Out\n";
       while (current != nullptr) {
-        out << current->name << ',' << current->klass << ',' <<
-          current->location << ',' << current->signInTime << ',' <<
-          current->tutor << '\n';
+        out << current->klass << ',' << current->location << ','
+            << current->signInTime.toString() << ','
+            << current->helpedTime.toString() << ','
+            << current->finishedTime.toString() << '\n';
         current = current->next;
       }
     }
@@ -177,6 +203,7 @@ void Queue::removeFromList(QString name) {
   else if (toBeHelped->name.compare(name) == 0) { //if the head ptr is being removed
     Student * temp = toBeHelped->next;
     toBeHelped->next = nullptr;
+    toBeHelped->finishedTime = QTime::currentTime();
     addToFinished(toBeHelped);
     toBeHelped = temp;
   }
@@ -189,6 +216,7 @@ void Queue::removeFromList(QString name) {
     if (current != nullptr) { //ensure that current has not gone beyond the last node
       previous->next = current->next;
       current->next = nullptr;
+      current->finishedTime = QTime::currentTime();
       addToFinished(current);
     }
   }
@@ -223,29 +251,115 @@ void Queue::deleteFromList(QString name) {
   }
 }
 
+Tutor::Tutor(QString id, QString name) {
+    this->id = id;
+    this->name = name;
+    this->next = nullptr;
+}
+
+Tutor::~Tutor() {
+    if (next != nullptr) delete next;
+}
+
+TutorsOnDuty::TutorsOnDuty() {
+    head = nullptr;
+}
+
+TutorsOnDuty::~TutorsOnDuty() {
+    if (head != nullptr) delete head;
+}
+
+void TutorsOnDuty::add(Tutor * toAdd) {
+    if (head == nullptr)
+        head = toAdd;
+    else {
+        Tutor * current = head;
+        while (current->next != nullptr)
+            current = current->next;
+        current->next = toAdd;
+    }
+}
+
+void TutorsOnDuty::remove(QString id) {
+    if (head != nullptr) { //if head is null, nothing to remove
+        if (head->id.compare(id) == 0) { //if removing head ptr
+            Tutor * temp = head->next;
+            head->next = nullptr;
+            delete head;
+            head = temp;
+        }
+        else {
+            Tutor * current = head->next, * previous = current;
+            //while current is not null and id has not been found, traverse
+            while (current != nullptr && current->id.compare(id) != 0) {
+                previous = current;
+                current = current->next;
+            }
+            if (current != nullptr) { //if tutor's id was found, remove
+                previous->next = current->next;
+                current->next = nullptr;
+                delete current;
+            }
+        }
+    }
+}
+
+bool TutorsOnDuty::containsId(QString id) {
+    if (head != nullptr) {
+      Tutor * current = head;
+      while (current != nullptr) {
+        if (current->id.compare(id) == 0) {
+          return true;
+        }
+        current = current->next;
+      }
+    }
+    return false;
+}
+
+/**
+ * @brief RegInfo::RegInfo
+ *      Constructor for an instance of a Registered student/tutor
+ * @param id
+ *      The id number of the student/tutor
+ * @param name
+ *      The name of the student/tutor
+ */
 RegInfo::RegInfo(QString id, QString name) {
   this->id = id;
   this->name = name;
   this->next = nullptr;
 }
 
+/**
+ * @brief RegInfo::~RegInfo
+ *      Destructor for a Registered student/tutor. Deletes the next node in the list.
+ */
 RegInfo::~RegInfo() {
   if (next) delete next;
 }
 
+/**
+ * @brief Database::Database
+ *      Constructor for Register database. Reads in TutorList.txt and adds tutors
+ *      to data stucture and reads students from RegInfo.dat and adds students
+ *      to another data structure.
+ */
 Database::Database() {
   tableSize = 21;
   tutors = nullptr;
   table = new RegInfo * [tableSize];
-  for (int i = 0; i < tableSize; ++i) {
+  QString id, name;
+
+  for (int i = 0; i < tableSize; ++i) { //set each ptr to null
     table[i] = nullptr;
   }
+
   QFile tutors("TutorList.txt");
-  if (tutors.open(QFile::ReadOnly)) {
-    QTextStream in(&tutors);
-    QString id, name;
-    while (!in.atEnd()) {
-      QString line = in.readLine();
+  if (tutors.open(QFile::ReadOnly)) {   //read in tutors from TutorList.txt
+    QTextStream inFile(&tutors);
+    while (!inFile.atEnd()) {
+      QString line = inFile.readLine();
       QStringList fields = line.split(',');
       if (fields.size() == 2) {
         id = fields.takeFirst();
@@ -254,17 +368,23 @@ Database::Database() {
       addTutor(new RegInfo(id, name));
     }
   }
+
   QFile data("RegInfo.dat");
-  if (data.open(QIODevice::ReadOnly)) {
-    QDataStream in(&data);
-    QString id, name;
-    while (!in.atEnd()) {
-      in >> id >> name;
-      add(id, name);
+  if (data.open(QIODevice::ReadOnly)) { //read in students from RegInfo.dat
+    QDataStream inFile(&data);
+    while (!inFile.atEnd()) {
+      inFile >> id >> name;
+      addStudent(id, name);
     }
   }
+
 }
 
+/**
+ * @brief Database::~Database
+ *      Destructor for Database class. Writes the database to a file
+ *      and cleans up the hashtable.
+ */
 Database::~Database() {
   writeOut();
   for (int i = 0; i < tableSize; ++i) {
@@ -272,7 +392,15 @@ Database::~Database() {
   }
 }
 
-void Database::add(QString id, QString name) {
+/**
+ * @brief Database::addStudent
+ *      Adds a student to the hashtable database
+ * @param id
+ *      The student's ODIN ID
+ * @param name
+ *      The student's name
+ */
+void Database::addStudent(QString id, QString name) {
   int key = hash(id);
   if (table[key] == nullptr) {
     table[key] = new RegInfo(id, name);
@@ -287,22 +415,54 @@ void Database::add(QString id, QString name) {
   writeOut();
 }
 
+/**
+ * @brief Database::getStudent
+ *      Gets the registered student info from the hash table
+ * @param id
+ *      The id to hash
+ * @return
+ *      The student's registered info
+ */
 RegInfo * Database::getStudent(QString id) {
-  int key = hash(id);
-  if (table[key] == nullptr)
-    return nullptr;
-  else {
+  int key = hash(id);   //hash id
+
+  if (table[key] != nullptr) { //ensure list at table entry is not empty
     RegInfo * current = table[key];
+    //traverse list until id is or is not found
     while (current && current->id.compare(id) != 0) {
       current = current->next;
     }
-    if (current) {
-      return current;
+    if (current) { //if the node with the id is found
+      return current; //return the node
     }
   }
   return nullptr;
 }
 
+/**
+ * @brief Database::addTutor
+ *      Adds a tutor to a linked list of tutor info
+ * @param toAdd
+ *      The tutor to add
+ */
+void Database::addTutor(RegInfo * toAdd) {
+  if (!tutors) {
+    tutors = toAdd;
+  }
+  else {
+    toAdd->next = tutors;
+    tutors = toAdd;
+  }
+}
+
+/**
+ * @brief Database::getTutor
+ *      Gets the registered tutor info from the linked list
+ * @param id
+ *      The tutor's id to look in the list
+ * @return
+ *      The tutor's information
+ */
 RegInfo * Database::getTutor(QString id) {
   if (!tutors) {
     return nullptr;
@@ -316,30 +476,36 @@ RegInfo * Database::getTutor(QString id) {
   }
 }
 
-void Database::addTutor(RegInfo * toAdd) {
-  if (!tutors) {
-    tutors = toAdd;
-  }
-  else {
-    toAdd->next = tutors;
-    tutors = toAdd;
-  }
-}
-
+/**
+ * @brief Database::hash
+ *      Hash function. Takes the value of each char and multiplies the ascii value by 7
+ *      powered to the string length minus the char index minus 1. Adds that value to
+ *      a sum integer and returns the value modulus the table size.
+ *      i.e. Sigma from 0 to string length ( digit * |7 ^ (string length - charPos - 1)| )
+ * @param id
+ *      The id string to hash
+ * @return
+ *      The hashed value
+ */
 int Database::hash(QString id) {
   int sum = 0;
   int length = id.length();
 
-  if (id.compare("") == 0)    //If the string is NULL
-    return -1;  //Nothing to hash
+  if (id.compare("") == 0)  //If the string is NULL
+    return -1;              //Nothing to hash
 
   for (int i = 0; i < length; ++i)
-    sum += id.at(i).digitValue() *                  //sum the string char * 7 powered to string length - index - 1
-      abs(pow(float(7), float((length - i - 1))));    //absolute value to prevent negative numbers
+    sum += id.at(i).digitValue() * abs(pow(float(7),    //sum the string char * 7 powered to string length - index - 1
+           float((length - i - 1))));                   //absolute value to prevent negative numbers
 
   return sum % tableSize; //return the sum modulous the hash table size
 }
 
+/**
+ * @brief Database::writeOut
+ *      Writes all of the student's information in the hash table
+ *      to a binary data file.
+ */
 void Database::writeOut() {
   QFile data("RegInfo.dat");
   if (data.open(QFile::WriteOnly)) {
@@ -371,6 +537,10 @@ MainWindow::MainWindow() {
   numberOnList = 0;
   theList = new QTableWidget(0, 5, this);
   buildTable(numberOnList);
+
+  numberOfTutorsOnDuty = 0;
+  tutorsOnDutyList = new QTableWidget(0, 1, this);
+  buildTutorList(numberOfTutorsOnDuty);
 
   signInWindow->openWindow();
 
@@ -408,6 +578,7 @@ MainWindow::MainWindow() {
 
   connect(tutorWindow->assignButton, SIGNAL(clicked()), this, SLOT(tutorAssignButtonPressed()));
   connect(tutorWindow->removeButton, SIGNAL(clicked()), this, SLOT(tutorRemoveButtonPressed()));
+  connect(tutorWindow->signInButton, SIGNAL(clicked()), this, SLOT(tutorSignInButtonPressed()));
   connect(tutorWindow->backButton, SIGNAL(clicked()), this, SLOT(tutorBackButtonPressed()));
 
   connect(confirmWindow->confirmButton, SIGNAL(clicked()), this, SLOT(confirmConfirmButtonPressed()));
@@ -436,6 +607,7 @@ void MainWindow::signInLogInButtonPressed() {
   if (tutor) {
     name = tutor->name;
     theList->show();
+    tutorsOnDutyList->show();
     signInWindow->closeWindow();
     tutorWindow->openWindow();
   }
@@ -443,13 +615,14 @@ void MainWindow::signInLogInButtonPressed() {
     RegInfo * student = database.getStudent(id);
     if (!student) { //if id is not in the database
       theList->hide();
+      tutorsOnDutyList->hide();
       signInWindow->closeWindow();
       registerWindow->openWindow();
     }
     else { //if the id is registered, go to class window
       if (queue.containsId(student->id)) {
         errorText->move(910, 525);
-        errorText->setText("You are already on queue");
+        errorText->setText("You are already on the queue");
         errorText->show();
         signInWindow->closeWindow();
         signInWindow->openWindow();
@@ -457,6 +630,7 @@ void MainWindow::signInLogInButtonPressed() {
       }
       name = student->name;
       theList->hide();
+      tutorsOnDutyList->hide();
       signInWindow->closeWindow();
       classWindow->openWindow();
     }
@@ -466,6 +640,7 @@ void MainWindow::signInLogInButtonPressed() {
 void MainWindow::signInNoRegLogInButtonPressed() {
   errorText->hide();
   theList->hide();
+  tutorsOnDutyList->hide();
   signInWindow->closeWindow();
   nameWindow->openWindow();
 }
@@ -485,10 +660,11 @@ void MainWindow::nameLogInButtonPressed() {
   name = nameWindow->nameDialog->text();
   if (queue.containsName(name)) {
     errorText->move(910, 525);
-    errorText->setText("The name entered is already on the list.\nPlease choose a different name or register");
+    errorText->setText("The name entered is already on the list.\nPlease include your last name or register");
     errorText->show();
     nameWindow->closeWindow();
     theList->show();
+    tutorsOnDutyList->show();
     signInWindow->openWindow();
     return;
   }
@@ -501,6 +677,7 @@ void MainWindow::nameCancelButtonPressed() {
   errorText->hide();
   nameWindow->closeWindow();
   theList->show();
+  tutorsOnDutyList->show();
   signInWindow->openWindow();
 }
 
@@ -517,7 +694,7 @@ void MainWindow::registerRegisterButtonPressed() {
     return;
   }
   name = registerWindow->nameDialog->text();
-  database.add(id, name);
+  database.addStudent(id, name);
   errorText->hide();
   registerWindow->closeWindow();
   classWindow->openWindow();
@@ -527,6 +704,7 @@ void MainWindow::registerCancelButtonPressed() {
   errorText->hide();
   registerWindow->closeWindow();
   theList->show();
+  tutorsOnDutyList->show();
   signInWindow->openWindow();
 }
 
@@ -600,6 +778,7 @@ void MainWindow::classOtherButtonPressed() {
 void MainWindow::classCancelButtonPressed() {
   classWindow->closeWindow();
   theList->show();
+  tutorsOnDutyList->show();
   signInWindow->openWindow();
 }
 
@@ -658,6 +837,7 @@ void MainWindow::locationConferenceButtonPressed() {
 void MainWindow::locationCancelButtonPressed() {
   locationWindow->closeWindow();
   theList->show();
+  tutorsOnDutyList->show();
   signInWindow->openWindow();
   showConfirm();
 }
@@ -673,10 +853,14 @@ void MainWindow::tutorAssignButtonPressed() {
     current = current->next;
   }
   if (current) {
-    if (current->tutor.compare(this->name) == 0)
+    if (current->tutor.compare(this->name) == 0) {
       current->tutor = "";
-    else
+      current->helpedTime = QTime();
+    }
+    else {
       current->tutor = this->name;
+      current->helpedTime = QTime::currentTime();
+    }
     updateTable();
   }
 }
@@ -687,6 +871,19 @@ void MainWindow::tutorRemoveButtonPressed() {
   queue.removeFromList(name);
   --numberOnList;
   updateTable();
+}
+
+void MainWindow::tutorSignInButtonPressed() {
+    RegInfo * tutor = database.getTutor(id);
+    if (tutorsOnDuty.containsId(tutor->id)) {
+        tutorsOnDuty.remove(tutor->id);
+        --numberOfTutorsOnDuty;
+    }
+    else {
+        tutorsOnDuty.add(new Tutor(tutor->id, tutor->name));
+        ++numberOfTutorsOnDuty;
+    }
+    updateTutorList();
 }
 
 void MainWindow::tutorBackButtonPressed() {
@@ -700,14 +897,15 @@ void MainWindow::tutorBackButtonPressed() {
  */
 void MainWindow::confirmConfirmButtonPressed() {
   if (id.compare("") != 0)
-    queue.add(new Student(id, name, klass, location, QTime::currentTime().toString()));
+    queue.add(new Student(id, name, klass, location, QTime::currentTime()));
   else
-    queue.add(new Student("0", name, klass, location, QTime::currentTime().toString()));
+    queue.add(new Student("0", name, klass, location, QTime::currentTime()));
   ++numberOnList;
   updateTable();
   confirmWindow->closeWindow();
   hideConfirm();
   theList->show();
+  tutorsOnDutyList->show();
   signInWindow->openWindow();
 }
 
@@ -715,6 +913,7 @@ void MainWindow::confirmCancelButtonPressed() {
   confirmWindow->closeWindow();
   hideConfirm();
   theList->show();
+  tutorsOnDutyList->show();
   signInWindow->openWindow();
 }
 
@@ -746,7 +945,7 @@ QString MainWindow::fullLocation(QString loc) {
 void MainWindow::buildTable(int rows) {
   theList->removeRow(rows);
   theList->insertRow(rows);
-  theList->move(260, 100);
+  theList->move(160, 100);
   theList->resize(850, 300);
   theList->setHorizontalHeaderLabels(QStringList() << "Name" << "Class" << "Location" << "Sign-in Time" << "Being Helped by");
   theList->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -763,13 +962,37 @@ void MainWindow::updateTable() {
   buildTable(numberOnList);
   Student * current = queue.toBeHelped;
   int row = 0;
-  while (current) {
+  while (current != nullptr) {
     theList->setItem(row, 0, new QTableWidgetItem(current->name));
     theList->setItem(row, 1, new QTableWidgetItem(current->klass));
     theList->setItem(row, 2, new QTableWidgetItem(fullLocation(current->location)));
-    theList->setItem(row, 3, new QTableWidgetItem(current->signInTime));
+    theList->setItem(row, 3, new QTableWidgetItem(current->signInTime.toString("hh:mm a")));
     theList->setItem(row, 4, new QTableWidgetItem(current->tutor));
     current = current->next;
     ++row;
   }
+}
+
+void MainWindow::buildTutorList(int rows) {
+    tutorsOnDutyList->removeRow(rows);
+    tutorsOnDutyList->insertRow(rows);
+    tutorsOnDutyList->move(1100, 100);
+    tutorsOnDutyList->resize(150, 300);
+    tutorsOnDutyList->setHorizontalHeaderLabels(QStringList() << "Tutors on Duty");
+    tutorsOnDutyList->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tutorsOnDutyList->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    tutorsOnDutyList->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
+    tutorsOnDutyList->setColumnWidth(0, 130);
+}
+
+void MainWindow::updateTutorList() {
+    tutorsOnDutyList->clearContents();
+    buildTutorList(numberOfTutorsOnDuty);
+    Tutor * current = tutorsOnDuty.head;
+    int row = 0;
+    while (current != nullptr) {
+      tutorsOnDutyList->setItem(row, 0, new QTableWidgetItem(current->name));
+      current = current->next;
+      ++row;
+    }
 }

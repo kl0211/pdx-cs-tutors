@@ -18,47 +18,63 @@
 #include "confirmwindow.hpp"
 
 ConfirmWindow::ConfirmWindow(QWidget * parent) : QWidget (parent) {
-  font.setPointSize(24);
+  textFont.setPointSize(24);
+
+  buttonFont.setPointSize(24);
+  buttonFont.setBold(true);
+
   text = new QLabel("Please confirm that the following information is correct", parent);
   text->move(100, 100);
   text->resize(1200, 300);
   text->hide();
-  text->setFont(font);
+  text->setFont(textFont);
 
   name = new QLabel("Name:", parent);
+  name->resize(300, 50);
   name->move(300, 300);
+  name->setFont(textFont);
   name->hide();
 
   nameOutput = new QLabel(parent);
-  nameOutput->move(400, 265);
-  nameOutput->resize(300, 100);
+  nameOutput->resize(1000, 50);
+  nameOutput->move(500, 300);
+  nameOutput->setFont(textFont);
   nameOutput->hide();
 
   klass = new QLabel("Class:", parent);
+  klass->resize(300, 50);
   klass->move(300, 375);
+  klass->setFont(textFont);
   klass->hide();
 
   klassOutput = new QLabel(parent);
-  klassOutput->move(400, 375);
+  klassOutput->resize(1000, 50);
+  klassOutput->move(500, 375);
+  klassOutput->setFont(textFont);
   klassOutput->hide();
 
   location = new QLabel("Location:", parent);
+  location->resize(300, 75);
   location->move(300, 450);
+  location->setFont(textFont);
   location->hide();
 
   locationOutput = new QLabel(parent);
-  locationOutput->move(400, 425);
-  locationOutput->resize(200, 75);
+  locationOutput->resize(1000, 75);
+  locationOutput->move(500, 450);
+  locationOutput->setFont(textFont);
   locationOutput->hide();
 
   confirmButton = new QPushButton("Confirm", parent);
-  confirmButton->move(300, 600);
   confirmButton->resize(300, 75);
+  confirmButton->move(300, 600);
+  confirmButton->setFont(buttonFont);
   confirmButton->hide();
 
   cancelButton = new QPushButton("Start Over", parent);
-  cancelButton->move(800, 600);
   cancelButton->resize(300, 75);
+  cancelButton->move(800, 600);
+  cancelButton->setFont(buttonFont);
   cancelButton->hide();
 }
 

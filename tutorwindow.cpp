@@ -18,30 +18,44 @@
 #include "tutorwindow.hpp"
 
 TutorWindow::TutorWindow(QWidget * parent) : QWidget(parent) {
+  buttonFont.setPointSize(16);
+  buttonFont.setBold(true);
+
   assignButton = new QPushButton("Assign/Unassign me to\nthe selected student", parent);
-  assignButton->move(300, 600);
-  assignButton->resize(200, 75);
+  assignButton->move(300, 425);
+  assignButton->resize(300, 100);
+  assignButton->setFont(buttonFont);
   assignButton->hide();
 
   removeButton = new QPushButton("Remove selected\nstudent from list", parent);
-  removeButton->move(550, 600);
-  removeButton->resize(200, 75);
+  removeButton->move(650, 425);
+  removeButton->resize(300, 100);
+  removeButton->setFont(buttonFont);
   removeButton->hide();
 
+  signInButton = new QPushButton("Sign me in/out", parent);
+  signInButton->move(1075, 425);
+  signInButton->resize(200, 75);
+  signInButton->setFont(buttonFont);
+  signInButton->hide();
+
   backButton = new QPushButton("Back", parent);
-  backButton->move(800, 600);
+  backButton->move(1150, 650);
   backButton->resize(200, 75);
+  backButton->setFont(buttonFont);
   backButton->hide();
 }
 
 void TutorWindow::openWindow() {
   assignButton->show();
   removeButton->show();
+  signInButton->show();
   backButton->show();
 }
 
 void TutorWindow::closeWindow() {
   assignButton->hide();
   removeButton->hide();
+  signInButton->hide();
   backButton->hide();
 }

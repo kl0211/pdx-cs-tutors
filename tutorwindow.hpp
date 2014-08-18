@@ -25,7 +25,9 @@ class TutorWindow : public QWidget {
   Q_OBJECT
 
 public:
-  QPushButton * assignButton, * removeButton, * backButton;
+  QPushButton * assignButton, * removeButton,
+              * signInButton, * backButton;
+  QFont buttonFont;
 
   TutorWindow(QWidget * parent = 0);
   void openWindow();

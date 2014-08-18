@@ -18,23 +18,32 @@
 #include "namewindow.hpp"
 
 NameWindow::NameWindow(QWidget * parent) : QWidget(parent) {
+  font.setPointSize(24);
+  font.setBold(true);
+
+  buttonFont.setPointSize(20);
+  buttonFont.setBold(true);
+
   loginText = new QLabel("Enter your name below", parent);
-  loginText->move(startXPos + 200, startYPos + 350);
-  loginText->resize(400, 30);
+  loginText->move(500, 425);
+  loginText->resize(1000, 50);
+  loginText->setFont(font);
   loginText->hide();
 
   loginButton = new QPushButton("Sign-in", parent);
-  loginButton->move(startXPos + 400, startYPos + 400);
+  loginButton->move(700, 500);
   loginButton->resize(200, 80);
+  loginButton->setFont(buttonFont);
   loginButton->hide();
 
   cancelButton = new QPushButton("Cancel", parent);
-  cancelButton->move(startXPos + 250, startYPos + 550);
+  cancelButton->move(550, 650);
   cancelButton->resize(300, 80);
+  cancelButton->setFont(buttonFont);
   cancelButton->hide();
 
   nameDialog = new QLineEdit(parent);
-  nameDialog->move(startXPos + 200, startYPos + 400);
+  nameDialog->move(500, 500);
   nameDialog->resize(200, 80);
   nameDialog->setPlaceholderText("Name");
   nameDialog->setMaxLength(20);
