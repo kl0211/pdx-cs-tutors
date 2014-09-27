@@ -63,8 +63,7 @@ Student::~Student() {
  *      Constructor for the Queue
  */
 Queue::Queue() {
-  this->toBeHelped = nullptr;
-  this->finished = nullptr;
+  this->head = nullptr;
 }
 
 /**
@@ -75,25 +74,7 @@ Queue::Queue() {
  *      class, time-in and helped time.
  */
 Queue::~Queue() {
-  if (finished != nullptr) {
-    QString fileName = QDateTime::currentDateTime().toString("yyyy-MM-dd-HH:mm");
-    fileName += ".csv"; //append .csv file extension to name
-    Student * current = finished;
-    QFile data(fileName);
-    if (data.open(QFile::WriteOnly | QFile::Truncate)) {
-      QTextStream out(&data);
-      out << "Class,Location,Time In,Time Helped,Time Out\n";
-      while (current != nullptr) {
-        out << current->klass << ',' << current->location << ','
-            << current->signInTime.toString() << ','
-            << current->helpedTime.toString() << ','
-            << current->finishedTime.toString() << '\n';
-        current = current->next;
-      }
-    }
-    delete finished;
-  }
-  if (toBeHelped != nullptr) delete toBeHelped;
+  if (head != nullptr) delete head;
 }
 
 /**
@@ -103,22 +84,22 @@ Queue::~Queue() {
  *      The student node being added to the list
  */
 void Queue::add(Student * toAdd) {
-  if (toBeHelped == nullptr)
-    toBeHelped = toAdd;
+  if (head == nullptr)
+    head = toAdd;
   else if (toAdd->klass.compare("Other") != 0 &&      //if the node being added is "better" than
-           toBeHelped->klass.compare("Other") == 0) { //the head node, make it the new head
-    toAdd->next = toBeHelped;
-    toBeHelped = toAdd;
+           head->klass.compare("Other") == 0) { //the head node, make it the new head
+    toAdd->next = head;
+    head = toAdd;
   }
   else {
     if (toAdd->klass.compare("Other") == 0) { //if class is 'other', move to the end
-      Student * current = toBeHelped;
+      Student * current = head;
       while (current->next != nullptr)
         current = current->next;
       current->next = toAdd;
     }
     else {                                    //else, move to the end or until the first 'other'
-      Student * current = toBeHelped, * previous = toBeHelped;
+      Student * current = head, * previous = head;
       while (current != nullptr && current->klass.compare("Other") != 0) {
         previous = current;
         current = current->next;
@@ -126,21 +107,6 @@ void Queue::add(Student * toAdd) {
       previous->next = toAdd;
       toAdd->next = current;
     }
-  }
-}
-
-/**
- * @brief Queue::addToFinished
- *      Takes a Student node and adds it to the list of helped students
- * @param toAdd
- *      The Student node to add to the finished list
- */
-void Queue::addToFinished(Student * toAdd) {
-  if (finished == nullptr)
-    finished = toAdd;
-  else {
-    toAdd->next = finished;
-    finished = toAdd;
   }
 }
 
@@ -153,10 +119,10 @@ void Queue::addToFinished(Student * toAdd) {
  *      True if list contains student
  */
 bool Queue::containsId(QString id) {
-  if (toBeHelped == nullptr)
+  if (head == nullptr)
     return false;
   else {
-    Student * current = toBeHelped;
+    Student * current = head;
     while (current != nullptr) {
       if (current->id.compare(id) == 0) {
         return true;
@@ -176,11 +142,11 @@ bool Queue::containsId(QString id) {
  *      True if list contains student's name
  */
 bool Queue::containsName(QString name) {
-  if (toBeHelped == nullptr) {
+  if (head == nullptr) {
     return false;
   }
   else {
-    Student * current = toBeHelped;
+    Student * current = head;
     while (current != nullptr) {
       if (current->name.toLower().compare(name.toLower()) == 0) {
         return true;
@@ -198,54 +164,45 @@ bool Queue::containsName(QString name) {
  *      The name of the student
  */
 void Queue::removeFromList(QString name) {
-  if (toBeHelped == nullptr) //if the list is empty
+  if (head == nullptr) //if the list is empty
     return;
-  else if (toBeHelped->name.compare(name) == 0) { //if the head ptr is being removed
-    Student * temp = toBeHelped->next;
-    toBeHelped->next = nullptr;
-    toBeHelped->finishedTime = QTime::currentTime();
-    addToFinished(toBeHelped);
-    toBeHelped = temp;
+  else if (head->name.compare(name) == 0) { //if the head ptr is being removed
+    Student * temp = head->next; //set temp ptr to hold on to rest of list (or null)
+    head->next = nullptr; //disconnect head from list
+    head->finishedTime = QTime::currentTime(); //set finished time for student
+    QString fileName = QDateTime::currentDateTime().toString("yyyy-MM-dd"); //write to log
+    fileName += ".csv"; //append .csv file extension to name
+    QFile data(fileName);
+    if (data.open(QFile::Append | QFile::Truncate)) {
+      QTextStream out(&data);
+      out << head->klass << ',' << head->location << ','
+          << head->signInTime.toString() << ','
+          << head->helpedTime.toString() << ','
+          << head->finishedTime.toString() << '\n';
+    }
+    delete head;
+    head = temp;
   }
   else {
-    Student * current = toBeHelped, * previous = toBeHelped;
+    Student * current = head, * previous = head;
     while (current != nullptr && current->name.compare(name) != 0) {
       previous = current;
       current = current->next;
     }
     if (current != nullptr) { //ensure that current has not gone beyond the last node
-      previous->next = current->next;
-      current->next = nullptr;
-      current->finishedTime = QTime::currentTime();
-      addToFinished(current);
-    }
-  }
-}
-
-/**
- * @brief Queue::deleteFromList
- *      Removes a student from the list without adding them to the finished list
- * @param name
- *      The name of the student
- */
-void Queue::deleteFromList(QString name) {
-  if (toBeHelped == nullptr) //if the list is empty
-    return;
-  else if (toBeHelped->name.compare(name) == 0) { //if the head ptr is being removed
-    Student * temp = toBeHelped->next;
-    toBeHelped->next = nullptr;
-    delete toBeHelped;
-    toBeHelped = temp;
-  }
-  else {
-    Student * current = toBeHelped, * previous = toBeHelped;
-    while (current != nullptr && current->name.compare(name) != 0) {
-      previous = current;
-      current = current->next;
-    }
-    if (current != nullptr) { //ensure that current has not gone beyond the last node
-      previous->next = current->next;
-      current->next = nullptr;
+      previous->next = current->next; //set previous' next to current's next
+      current->next = nullptr; //disconnect current from list
+      current->finishedTime = QTime::currentTime(); //set finished time for student
+      QString fileName = QDateTime::currentDateTime().toString("yyyy-MM-dd"); //write to log
+      fileName += ".csv"; //append .csv file extension to name
+      QFile data(fileName);
+      if (data.open(QFile::Append | QFile::Truncate)) {
+        QTextStream out(&data);
+        out << current->klass << ',' << current->location << ','
+            << current->signInTime.toString() << ','
+            << current->helpedTime.toString() << ','
+            << current->finishedTime.toString() << '\n';
+        }
       delete current;
     }
   }
@@ -289,7 +246,7 @@ void TutorsOnDuty::remove(QString id) {
             head = temp;
         }
         else {
-            Tutor * current = head->next, * previous = current;
+            Tutor * current = head->next, * previous = head;
             //while current is not null and id has not been found, traverse
             while (current != nullptr && current->id.compare(id) != 0) {
                 previous = current;
@@ -586,7 +543,7 @@ MainWindow::MainWindow() {
 
   setWindowTitle("PDX CS Tutors Sign in");
   resize(XRES, YRES);
-  //showFullScreen();
+  showFullScreen();
 }
 
 /*
@@ -847,7 +804,7 @@ void MainWindow::locationCancelButtonPressed() {
  */
 void MainWindow::tutorAssignButtonPressed() {
   if (theList->currentItem() == nullptr) return;
-  Student * current = queue.toBeHelped;
+  Student * current = queue.head;
   QString name = theList->currentItem()->text();
   while (current && current->name.compare(name)) {
     current = current->next;
@@ -960,7 +917,7 @@ void MainWindow::buildTable(int rows) {
 void MainWindow::updateTable() {
   theList->clearContents();
   buildTable(numberOnList);
-  Student * current = queue.toBeHelped;
+  Student * current = queue.head;
   int row = 0;
   while (current != nullptr) {
     theList->setItem(row, 0, new QTableWidgetItem(current->name));

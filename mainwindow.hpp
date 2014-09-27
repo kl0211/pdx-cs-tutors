@@ -53,10 +53,7 @@ struct Queue {
   bool containsId(QString);
   bool containsName(QString);
   void removeFromList(QString);
-  void deleteFromList(QString);
-  void addToFinished(Student *);
-  Student * toBeHelped;
-  Student * finished;
+  Student * head;
 };
 
 struct Tutor {
