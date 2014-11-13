@@ -178,7 +178,8 @@ void Queue::removeFromList(QString name) {
       out << head->klass << ',' << head->location << ','
           << head->signInTime.toString() << ','
           << head->helpedTime.toString() << ','
-          << head->finishedTime.toString() << '\n';
+          << head->finishedTime.toString() << ','
+          << QDateTime::currentDateTime().toString("yyyy-MM-dd") << '\n';
     }
     delete head;
     head = temp;
@@ -201,7 +202,8 @@ void Queue::removeFromList(QString name) {
         out << current->klass << ',' << current->location << ','
             << current->signInTime.toString() << ','
             << current->helpedTime.toString() << ','
-            << current->finishedTime.toString() << '\n';
+            << head->finishedTime.toString() << ','
+            << QDateTime::currentDateTime().toString("yyyy-MM-dd") << '\n';
         }
       delete current;
     }
