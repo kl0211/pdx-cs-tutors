@@ -50,7 +50,7 @@ SignInWindow::SignInWindow(QWidget * parent) : QWidget(parent) {
   loginDialog->setValidator(new QRegExpValidator(QRegExp("[0-9]{9}")));
   loginDialog->hide();
 
-  logo = new QLabel("<img src='psulogo.gif' />", parent);
+  logo = new QLabel("<img src='/var/tutor-data/psulogo.gif' />", parent);
   logo->resize(300,100);
 
   title = new QLabel("CS Tutor Sign-In", parent);
