@@ -29,6 +29,10 @@
 
 using namespace std;
 
+const QString TUTOR_FILE = "./TutorList.txt";
+const QString REG_FILE = "./RegFile.dat";
+const QString LOG_DIR = "./";
+
 class SignInWindow;
 class NameWindow;
 class RegisterWindow;

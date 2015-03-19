@@ -170,7 +170,7 @@ void Queue::removeFromList(QString name) {
     Student * temp = head->next; //set temp ptr to hold on to rest of list (or null)
     head->next = nullptr; //disconnect head from list
     head->finishedTime = QTime::currentTime(); //set finished time for student
-    QString fileName = "/var/tutor-data/logs/";
+    QString fileName = LOG_DIR;
     fileName += QDateTime::currentDateTime().toString("yyyy-MM-dd"); //write to log
     fileName += ".csv"; //append .csv file extension to name
     QFile data(fileName);
@@ -195,7 +195,7 @@ void Queue::removeFromList(QString name) {
       previous->next = current->next; //set previous' next to current's next
       current->next = nullptr; //disconnect current from list
       current->finishedTime = QTime::currentTime(); //set finished time for student
-      QString fileName = "/var/tutor-data/logs/";
+      QString fileName = LOG_DIR;
       fileName += QDateTime::currentDateTime().toString("yyyy-MM-dd"); //write to log
       fileName += ".csv"; //append .csv file extension to name
       QFile data(fileName);
@@ -316,7 +316,7 @@ Database::Database() {
     table[i] = nullptr;
   }
 
-  QFile tutors("/var/tutor-data/TutorList.txt");
+  QFile tutors(TUTOR_FILE);
   if (tutors.open(QFile::ReadOnly)) {   //read in tutors from TutorList.txt
     QTextStream inFile(&tutors);
     while (!inFile.atEnd()) {
@@ -330,7 +330,7 @@ Database::Database() {
     }
   }
 
-  QFile data("/var/tutor-data/RegInfo.dat");
+  QFile data(REG_FILE);
   if (data.open(QIODevice::ReadOnly)) { //read in students from RegInfo.dat
     QDataStream inFile(&data);
     while (!inFile.atEnd()) {
@@ -468,7 +468,7 @@ int Database::hash(QString id) {
  *      to a binary data file.
  */
 void Database::writeOut() {
-  QFile data("RegInfo.dat");
+  QFile data(REG_FILE);
   if (data.open(QFile::WriteOnly)) {
     QDataStream out(&data);
     for (int i = 0; i < tableSize; ++i) {
